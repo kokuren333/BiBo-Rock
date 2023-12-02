@@ -4,48 +4,53 @@
   - &lt;a href="#静的サイトと動的サイト"&gt;静的サイトと動的サイト&lt;/a&gt;
   - &lt;a href="#静的サイトジェネレーターそれは魔法のアイテム"&gt;静的サイトジェネレーター、それは魔法のアイテム&lt;/a&gt;
 - &lt;a href="#サイトを公開するまでの簡易手順-pelican編"&gt;サイトを公開するまでの簡易手順 【pelican編】&lt;/a&gt;
-  - &lt;a href="#必要なライブラリをインストール"&gt;必要なライブラリをインストール&lt;/a&gt;
+  - &lt;a href="#仮想環境に必要なライブラリをインストール"&gt;仮想環境に必要なライブラリをインストール&lt;/a&gt;
   - &lt;a href="#markdownで記事を書いてpelicanでサイト化"&gt;markdownで記事を書いてpelicanでサイト化&lt;/a&gt;
+  - &lt;a href="#バッチファイルを用意windows"&gt;バッチファイルを用意（windows）&lt;/a&gt;
 - &lt;a href="#見出し３"&gt;見出し３&lt;/a&gt;
   - &lt;a href="#見出し３の１"&gt;見出し３の１&lt;/a&gt;
   - &lt;a href="#見出し３の２"&gt;見出し３の２&lt;/a&gt;&lt;/p&gt;
 &lt;h2&gt;pythonで動く静的サイトジェネレータ "pelican"&lt;/h2&gt;
 &lt;p&gt;自分で1からサイト作れるようになりたいなあとずっと思っていたのでついにサイト制作に手を出しちゃいました。サイト制作にあたって、pythonが好き（というかpythonしか環境構築してないから選択肢がない）なのでpelicanというpythonで動く静的サイトジェネレータを使ってみることにしました。&lt;/p&gt;
 &lt;p&gt;ところがこのpelicanというライブラリ、なかなかまとまった日本語の情報が落ちていません。&lt;/p&gt;
-&lt;p&gt;じゃあもう自分の備忘録用のブログを作るついでに、まとまったpelicanの解説記事群を作ってしまおうと思い立ちました。&lt;/p&gt;
-&lt;p&gt;そこで、今回はpelicanでサイトを作成し、github pagesを使って実際に公開するまでの実際の手順をご紹介します。というよりは、自分でやってみたことの記録です。&lt;/p&gt;
-&lt;p&gt;github pagesを使う理由はgitをちゃんと触ってみたかったのと、サーバー代もドメイン代もかからないのがアドすぎるからです。&lt;/p&gt;
-&lt;p&gt;githubのリポジトリはpublicならいくらでも作れる（はず）ので、ソースコードを公開すればサイト自体は規約の範囲内で無料で作り放題（な気がする）！&lt;/p&gt;
+&lt;p&gt;じゃあもう自分の備忘録用のブログを作るついでに、まとまったpelicanサイト制作の紹介記事群を作ってしまおうと思い立ちました。解説記事というよりは、自分がやったことほぼ全ての詳細な記録集にしようと思っています。後述しますが、筆者がプログラミング初心者であるため、理解していないけどとりあえずやっていることとかもあるからです。あくまでも備忘録です。&lt;/p&gt;
+&lt;p&gt;今回はpelicanでサイトを生成し、github pagesを使って実際に公開するまでのおおまかな手順をご紹介します。&lt;/p&gt;
+&lt;p&gt;正直この部分（サイト生成とgithubへのpush）については日本語でも解説記事が結構あり、CUIやらgitやらを使う場面が出てくるために若干環境によってやり方が異なる可能性があるので、各自調べながら頑張ってもらいたいのですが、一応やったことを記録しておきます。&lt;/p&gt;
+&lt;p&gt;ちなみに筆者がgithub pagesを使う理由はgitをちょっと触ってみたかったのと、サーバー代もドメイン代もかからないのがアドすぎるからです。&lt;/p&gt;
+&lt;p&gt;githubのリポジトリはpublicならいくらでも作れる（はず）ので、ソースコードを公開さえすればサイト自体は規約の範囲内で無料で作り放題（な気がする）！&lt;/p&gt;
+&lt;p&gt;なお、多分アフィカスはできないので注意です。&lt;br&gt;
+WordPressとかいう過去の遺物でがんばってください。&lt;br&gt;
+(アドセンスぐらいならできた気もするけど)&lt;/p&gt;
 &lt;p&gt;&lt;a href="https://docs.github.com/ja/pages/getting-started-with-github-pages/about-github-pages" title="GitHub Pagesについて"&gt;GitHub Pagesについて&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;一応pelicanを触り始めた時の筆者のプログラミングスペックも記載しておきます。&lt;/p&gt;
+&lt;p&gt;一応筆者のプログラミングスペックは以下になります。&lt;/p&gt;
 &lt;p&gt;Python: github copilot（AIアシスタント）を使ってかろうじて書ける&lt;br&gt;
 html: 読めばだいたい何言ってるかはわかるが自分で書くのはしんどい&lt;br&gt;
-css: 全く知らないし、完全に理解していない&lt;br&gt;
-javascript: 本当に何も知らないし、型付けがめんどそう（Pythoner並感）&lt;/p&gt;
-&lt;p&gt;あ、あと環境としてはwindowsでの話になります。&lt;br&gt;
-MACだとコマンドとかの部分がちょっと変わるのかも。&lt;/p&gt;
+css: ほぼ知らないし、完全に理解していない&lt;br&gt;
+javascript: 本当に何も知らないし、型付けがめんどそう&lt;/p&gt;
+&lt;p&gt;ちなみに、サイト制作の上でPythonをゴリゴリ書いたり読んだりしなきゃいけない場面はほぼ出てこないと思われます。ちょっと設定用の.pyファイルを弄るぐらいで済むはずです。&lt;/p&gt;
 &lt;h3&gt;静的サイトと動的サイト&lt;/h3&gt;
 &lt;blockquote&gt;
 &lt;p&gt;この世のサイトは2つしかない。静的サイトかそれ以外かだ。&lt;/p&gt;
 &lt;/blockquote&gt;
 &lt;p&gt;このインターネット上のウェブサイトは大きく「静的サイト」と「動的サイト」に分けられます。&lt;/p&gt;
 &lt;p&gt;あんまりちゃんと理解はしていませんが、静的サイトはウェブサイトの基本セット（html + css + javascript）で構成されている、シンプルで誰がいつ見ても変わらないやつのことで、動的サイトはPHPとかを使ってサーバーといっぱいデータ通信をするやつって捉えています。&lt;/p&gt;
-&lt;p&gt;速い遅いとかまだそんなに分かっていないのですが、まあ原理的に静的サイトの方が軽くて当然ですよね。有名なものとして&lt;a href="http://abehiroshi.la.coocan.jp/" title="阿部寛のホームページ"&gt;阿部寛のホームページ&lt;/a&gt;がよくネタとして擦られています。&lt;/p&gt;
-&lt;p&gt;個人ブログの選択肢としてよくWordPressが挙げられますが、あれはPHPで動いてるみたいです。無料テーマはちょっとダサい感じするし、カスタマイズ性もしんどいです。そもそも個人ブログでサーバーサイドとデータのやり取りを沢山するケースがよくわからないので、静的サイトで作れるならそっちの方がよいと思っています。&lt;/p&gt;
-&lt;p&gt;問題は、静的サイトの基本セット（html + css + javascript）を何もないところから自分で組み立てたり、ブログとして新しい記事を安定して投稿できるようにするのはちょっとガチでしんどいということです。copilotとかChatGPT使っても流石に限界がある。&lt;/p&gt;
+&lt;p&gt;プログラムの速い遅いだとかは筆者はまだ分かっていないのですが、まあ原理的に静的サイトの方が軽くて当然ですよね。有名なものとして&lt;a href="http://abehiroshi.la.coocan.jp/" title="阿部寛のホームページ"&gt;阿部寛のホームページ&lt;/a&gt;がよくネタとして擦られています。&lt;/p&gt;
+&lt;p&gt;個人ブログの選択肢としてよくWordPressが挙げられますが、あれはPHPで動いてるみたいです。無料テーマはちょっとダサい感じがするし、カスタマイズ性もしんどいです。そもそも個人ブログでサーバーサイドとデータのやり取りを沢山するケースがよくわからないので、静的サイトで作れるならそっちの方がよいと思っています。&lt;/p&gt;
+&lt;p&gt;古き良きテキストサイトの趣もあるしね。&lt;/p&gt;
+&lt;p&gt;問題は、静的サイトの基本セット（html + css + javascript）を何もないところから自分で組み立てたり、ブログとして新しい記事を安定して投稿できるようにシステム化するのはちょっとガチでしんどいということです。copilotとかChatGPTを使っても流石に限界がある。実際やったことあるっちゃあるんですがつらかった。&lt;/p&gt;
+&lt;p&gt;昔のテキストサイト管理人たちの情熱はすごかったと感じています。&lt;/p&gt;
 &lt;h3&gt;静的サイトジェネレーター、それは魔法のアイテム&lt;/h3&gt;
-&lt;p&gt;ウェブサイト作りたいなーと思って色々調べている内に、markdown記法で書いたものをhtmlに変換する技術や、予め用意したcssのテンプレートなどを使ってサイトを制作できるプログラムがあることを知りました。&lt;/p&gt;
-&lt;p&gt;やってることは原理的にはnoteとかqiitaみたいな文章コンテンツ投稿サイトのフロントエンドと同じなのかなと思ってます。（間違ってたらごめん。でもqiitaなんてそもそも記事をmarkdownで書くんだし。）&lt;/p&gt;
+&lt;p&gt;ウェブサイトを作りたい（かつ維持したい）なーと思って色々調べている内に、markdown記法で書いたものをhtmlに変換する技術や、予め用意したcssのテンプレートなどを使ってサイトを制作できるプログラムがあることを知りました。&lt;/p&gt;
+&lt;p&gt;やってることは原理的にはnoteとかqiitaみたいな文章コンテンツ投稿サイトと同じなのかなと思ってます。間違ってたらごめんなさい。でもqiitaなんてそもそも記事をmarkdownで書くわけで、多分やってること同じだと思うんですよね。&lt;/p&gt;
 &lt;p&gt;ちまちまhtmlタグを一行一行打ち込むのはブログとして現実的に不可能ですし、markdown記法で書いたものを自分でも簡単に変換できるのは革命だと思いました。&lt;/p&gt;
-&lt;p&gt;なんなら一度サイトの基本形を作ってしまえばあとはmarkdownで書いた記事を更新するだけなので、やることが単純明快でいいなと感じました。WordPressはごちゃごちゃしたUIにPHPとかいう謎言語の時点でもうやる気がなくなりますよね。&lt;/p&gt;
-&lt;p&gt;有名な静的サイトジェネレータとしてはHugoやJekyllといったものがあるらしいのですが、Pythonで動くということと、pelicanという間抜けな名前に引かれて（そして日本語の情報があまりないマイナーな感じが面白くて）こいつを選びました。&lt;/p&gt;
+&lt;p&gt;なんなら一度サイトの基本形を作ってしまえばあとはmarkdownで書いた記事を更新するだけなので、やることが単純明快でいいなと感じました。WordPressはごちゃごちゃしたUIにPHPとかいう謎言語の時点でもうやる気がなくなります。&lt;/p&gt;
+&lt;p&gt;有名な静的サイトジェネレータとしてはHugoやJekyllといったものがあるらしいのですが、Pythonで動くということと、pelicanという間抜けな名前に惹かれて（そして日本語の情報があまりないマイナーな感じが面白くて）こいつを選びました。&lt;/p&gt;
 &lt;h2&gt;サイトを公開するまでの簡易手順 【pelican編】&lt;/h2&gt;
-&lt;p&gt;サイトを作って公開するための手順についてなのですが、実際はコンテンツやデザインを作り込む作業があるのを省略して、単純にpelicanでmarkdownからサイトを生成してgithubにぶち込む手順の紹介になります。&lt;/p&gt;
-&lt;p&gt;まずはpelicanがどういうものなのか、github pagesってどう使うのかといったことの確認です。ぶっちゃけこれぐらいの内容はqiitaとかにもあるのですが、一応最初から丁寧に記録していきます。&lt;/p&gt;
-&lt;h3&gt;必要なライブラリをインストール&lt;/h3&gt;
-&lt;p&gt;まずは仮想環境をvenvで作成しましょう。&lt;br&gt;
-この程度の処理に仮想環境が必要なのかはわかりませんが、万が一のため。&lt;br&gt;
-適当なフォルダを用意し、そこでコマンドプロンプトから以下を実行。&lt;/p&gt;
+&lt;p&gt;サイトを作って公開するための手順についてなのですが、本来はコンテンツやデザインを作り込む作業があるのを省略して、単純にpelicanでmarkdownからサイトを生成してgithubにぶち込む手順の紹介になります。正直ここまでは先駆者のn番煎じなので各自好きな記事で学習していただければと思います。&lt;/p&gt;
+&lt;p&gt;pelicanがどういうものなのか、github pagesってどう使うのかといったことの確認みたいなものです。前述の通り、これぐらいの内容はqiitaとかにもあるのですが、一応詳細に記録しておきます。&lt;/p&gt;
+&lt;h3&gt;仮想環境に必要なライブラリをインストール&lt;/h3&gt;
+&lt;p&gt;まずは仮想環境をvenvで作成しましょう。  この程度のことに仮想環境が必要なのかはわかりませんが、万が一の環境汚染や動作不良防止のため。&lt;br&gt;
+適当なフォルダ（今回はBiBo-Rockとしました。サイト名にすると良いでしょう。）を用意し、そこでコマンドプロンプトから以下を実行。&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;python -m venv venv
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
@@ -53,43 +58,91 @@ MACだとコマンドとかの部分がちょっと変わるのかも。&lt;/p&g
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;md project
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
-&lt;p&gt;以下からの手順は全て、projectフォルダをカレントディレクトリとして話を進めます。&lt;/p&gt;
-&lt;p&gt;仮想環境をアクティベートします。&lt;br&gt;
-パスを指定してactivate.batを実行。&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="cp"&gt;..\venv\Scripts\activate.bat&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-
-&lt;p&gt;(venv)と表示されて入れば仮想環境のアクティベートに成功です。&lt;/p&gt;
+&lt;p&gt;まず仮想環境をアクティベートします。&lt;br&gt;
+流石にPythonは入ってること前提です。&lt;br&gt;
+パスを指定してactivate.batを実行。
+(venv)と表示されていれば仮想環境のアクティベートに成功です。できなければ「venv 仮想環境 使い方」で検索しましょう。&lt;/p&gt;
 &lt;p&gt;ここに必要なライブラリをpipコマンドでインストールします。&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;pip install pelican markdown ghp-import
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;p&gt;これで仮想環境への必要なライブラリのインストールが完了しました。&lt;br&gt;
-前の2つはpelicanでmarkdownkからサイト自体を作るためのもの、ghp-importはgit関係のものです。&lt;/p&gt;
+前の2つはpelicanでmarkdownkからサイト自体を作るためのもの、ghp-importはgit関係のものでしょう。&lt;/p&gt;
 &lt;h3&gt;markdownで記事を書いてpelicanでサイト化&lt;/h3&gt;
 &lt;p&gt;次に、以下のコマンドを実行します。&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;pelican-quickstart
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
-&lt;p&gt;これをやるとなんか設定用にめっちゃ質問が飛んでくるので以下のように答えていきます。（github pagesで公開するための設定例です。）&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="k"&gt;Where&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;do&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;you&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;want&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="k"&gt;to&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="k"&gt;create&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;your&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="k"&gt;new&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;web&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;site&lt;/span&gt;&lt;span class="vm"&gt;?&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;[&lt;/span&gt;&lt;span class="n"&gt;.&lt;/span&gt;&lt;span class="o"&gt;]&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;
-&lt;span class="n"&gt;What&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;will&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;be&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;the&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;title&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="k"&gt;of&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;this&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;web&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;site&lt;/span&gt;&lt;span class="vm"&gt;?&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;
-&lt;span class="n"&gt;Who&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;will&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;be&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;the&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;author&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="k"&gt;of&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;this&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;web&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;site&lt;/span&gt;&lt;span class="vm"&gt;?&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;TestUser&lt;/span&gt;
-&lt;span class="n"&gt;What&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;will&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;be&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;the&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="k"&gt;default&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="k"&gt;language&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="k"&gt;of&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;this&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;web&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;site&lt;/span&gt;&lt;span class="vm"&gt;?&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;[&lt;/span&gt;&lt;span class="n"&gt;English&lt;/span&gt;&lt;span class="o"&gt;]&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;ja&lt;/span&gt;
-&lt;span class="n"&gt;Do&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;you&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;want&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="k"&gt;to&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;specify&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;a&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;URL&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="k"&gt;prefix&lt;/span&gt;&lt;span class="vm"&gt;?&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;e&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;g&lt;/span&gt;&lt;span class="p"&gt;.,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nl"&gt;https&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="o"&gt;//&lt;/span&gt;&lt;span class="n"&gt;example&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;com&lt;/span&gt;&lt;span class="w"&gt;   &lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;Y&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;n&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;n&lt;/span&gt;
-&lt;span class="n"&gt;Do&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;you&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;want&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="k"&gt;to&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;enable&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;article&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;pagination&lt;/span&gt;&lt;span class="vm"&gt;?&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;Y&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;n&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;Y&lt;/span&gt;
-&lt;span class="n"&gt;How&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;many&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;articles&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;per&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;page&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;do&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;you&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;want&lt;/span&gt;&lt;span class="vm"&gt;?&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;[&lt;/span&gt;&lt;span class="n"&gt;10&lt;/span&gt;&lt;span class="o"&gt;]&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="mi"&gt;10&lt;/span&gt;
-&lt;span class="n"&gt;What&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="k"&gt;is&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;your&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nc"&gt;time&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="k"&gt;zone&lt;/span&gt;&lt;span class="vm"&gt;?&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;[&lt;/span&gt;&lt;span class="n"&gt;Europe/Paris&lt;/span&gt;&lt;span class="o"&gt;]&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;Asia&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;Tokyo&lt;/span&gt;
-&lt;span class="n"&gt;Do&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;you&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;want&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="k"&gt;to&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;generate&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;a&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;tasks&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;py&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;Makefile&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="k"&gt;to&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;automate&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;generation&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="ow"&gt;and&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;publishing&lt;/span&gt;&lt;span class="vm"&gt;?&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;Y&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;n&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;Y&lt;/span&gt;
-&lt;span class="n"&gt;Do&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;you&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;want&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="k"&gt;to&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;upload&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;your&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;website&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="k"&gt;using&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;FTP&lt;/span&gt;&lt;span class="vm"&gt;?&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;y&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;N&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;N&lt;/span&gt;
-&lt;span class="n"&gt;Do&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;you&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;want&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="k"&gt;to&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;upload&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;your&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;website&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="k"&gt;using&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;SSH&lt;/span&gt;&lt;span class="vm"&gt;?&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;y&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;N&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;N&lt;/span&gt;
-&lt;span class="n"&gt;Do&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;you&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;want&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="k"&gt;to&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;upload&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;your&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;website&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="k"&gt;using&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;Dropbox&lt;/span&gt;&lt;span class="vm"&gt;?&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;y&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;N&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;N&lt;/span&gt;
-&lt;span class="n"&gt;Do&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;you&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;want&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="k"&gt;to&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;upload&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;your&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;website&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="k"&gt;using&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;S3&lt;/span&gt;&lt;span class="vm"&gt;?&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;y&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;N&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;N&lt;/span&gt;
-&lt;span class="n"&gt;Do&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;you&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;want&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="k"&gt;to&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;upload&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;your&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;website&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="k"&gt;using&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;Rackspace&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;Cloud&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;Files&lt;/span&gt;&lt;span class="vm"&gt;?&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;y&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;N&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;N&lt;/span&gt;
-&lt;span class="n"&gt;Do&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;you&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;want&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="k"&gt;to&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;upload&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;your&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;website&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="k"&gt;using&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;GitHub&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;Pages&lt;/span&gt;&lt;span class="vm"&gt;?&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;y&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;N&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;y&lt;/span&gt;
-&lt;span class="k"&gt;Is&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;this&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;your&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;personal&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;page&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;username&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;github&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;io&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="vm"&gt;?&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;y&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;N&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;N&lt;/span&gt;
+&lt;p&gt;これをやるとなんか設定用にめっちゃ質問が飛んでくるのでgithub pagesで公開することを前提に答えていきます。多分初期設定として重要なところなんですがどう答えたのか忘れました（アホ）。qiitaに答え方あげてくれてる人がいたので参考にしてください。というか英語読めれば困らなかったはずです。&lt;/p&gt;
+&lt;p&gt;クイックスタートをしたら各フォルダを確認しましょう。project\contentに記事のmarkdown(拡張子.md)を置くことになります。project\outputにはmarkdownから生成されたhtmlやら、テンプレートから生成されたcssやらが入ることになり、このoutputフォルダの中身をそのままgithubに置くことになります。クイックスタート時点では多分まだ空のはずです。&lt;/p&gt;
+&lt;p&gt;おそらくクイックスタート時点で記事のテンプレートmdファイルがcontentの中にあると思うので、そのままそのmarkdownからサイトを作ってgithub pagesにもうデプロイしちゃいましょう。markdownファイルがなければ.mdで新しく作りましょう。VScodeの標準機能でmarkdown拡張が入ってるみたいです。プレビューもできて便利。&lt;/p&gt;
+&lt;p&gt;いきなりデプロイしちゃうのは、pelicanやgitの機能の理解をしてから詳細なサイト制作に入った方が、結果として作りこみやすいと思ったからです。&lt;/p&gt;
+&lt;p&gt;そもそもgithub pagesをサイト制作に使う利点として、いつでもpushすることでオンライン上でプレビューできる、言い換えればサーバー関係の知識やノウハウなしに、gitのシステムを利用しながら本番環境で試しつつ制作できるところにあると思います。&lt;/p&gt;
+&lt;p&gt;まあサーバー契約していちいちそのサーバーのページからアップロードしながら工程を進めるのとかとやってることは変わらないっちゃ変わらない気もするんですが、どっちもやったことある身としてはgit使った方が結果として楽だしより汎用的な技術だと感じました。最初操作感覚えるのしんどいけど。&lt;/p&gt;
+&lt;p&gt;ともかく、markdownからhtmlやらを作っちゃいます。&lt;/p&gt;
+&lt;p&gt;やり方は以下のコマンドを打つだけで簡単です。&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;make html
+→ htmlとかをまとめてoutputに生成するコマンド
+
+make publish
+→ output内を整理してくれる公開前に打つコマンド（例えばcontent内で消去したmarkdown記事の分のhtmlファイルを消去してくれたりする）
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
+&lt;p&gt;以下のコマンドでローカル環境で確認することもできます&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;make serve
+→ ローカル環境でサイトの確認ができる（http://localhost:8000を任意のブラウザで開くと見れるようになる）
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;ところがです。&lt;/p&gt;
+&lt;p&gt;windowsだとなんか動作しないんですこれが。&lt;/p&gt;
+&lt;p&gt;ともかくこのコマンドが動かないので以下の解決策を行いましょう。&lt;br&gt;
+（おそらくコマンドがwindows用にできていない）&lt;/p&gt;
+&lt;h3&gt;バッチファイルを用意（windows）&lt;/h3&gt;
+&lt;p&gt;以下からダウンロードしてね。&lt;/p&gt;
+&lt;p&gt;&lt;a href="https://gist.github.com/traeblain/4252511" title="バッチファイルのリンク"&gt;devserver.cmdとpmake.cmdのgithubページ&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;これをprojectフォルダ内に置きます。&lt;/p&gt;
+&lt;p&gt;tree図としては以下のようになります。&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;│  devserver.cmd   ←これ
+│  Makefile
+│  pelicanconf.py
+│  pmake.cmd       ←これ
+│  publishconf.py
+│  tasks.py
+│
+├─content
+│      post_00001.md
+│     （ここが記事のmarkdownを置く場所）
+├─output
+│     （ここが実際にhtmlとかが生成される場所）
+│  
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;しかもそのままでも動かないので、バッチファイルの中身を書き換える必要があります。&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="nx"&gt;両ファイルとも最初の方の行&lt;/span&gt;&lt;span class="err"&gt;（&lt;/span&gt;&lt;span class="mi"&gt;3&lt;/span&gt;&lt;span class="err"&gt;～&lt;/span&gt;&lt;span class="mi"&gt;5&lt;/span&gt;&lt;span class="nx"&gt;行目&lt;/span&gt;&lt;span class="err"&gt;）&lt;/span&gt;&lt;span class="nx"&gt;にある&lt;/span&gt;
+
+&lt;span class="nx"&gt;set&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nx"&gt;_PELICAN&lt;/span&gt;&lt;span class="p"&gt;=&lt;/span&gt;&lt;span class="err"&gt;$&lt;/span&gt;&lt;span class="nx"&gt;pelican&lt;/span&gt;
+&lt;span class="nx"&gt;set&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nx"&gt;_PELICANOPTS&lt;/span&gt;&lt;span class="p"&gt;=&lt;/span&gt;&lt;span class="err"&gt;$&lt;/span&gt;&lt;span class="nx"&gt;pelicanopts&lt;/span&gt;
+&lt;span class="err"&gt;↓&lt;/span&gt;
+&lt;span class="nx"&gt;set&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nx"&gt;_PELICAN&lt;/span&gt;&lt;span class="p"&gt;=&lt;/span&gt;&lt;span class="nx"&gt;pelican&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="err"&gt;（&lt;/span&gt;&lt;span class="nx"&gt;頭の&lt;/span&gt;&lt;span class="err"&gt;$&lt;/span&gt;&lt;span class="nx"&gt;をとる&lt;/span&gt;&lt;span class="err"&gt;）&lt;/span&gt;
+&lt;span class="nx"&gt;set&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nx"&gt;_PELICANOPTS&lt;/span&gt;&lt;span class="p"&gt;=&lt;/span&gt;&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="err"&gt;（&lt;/span&gt;&lt;span class="nx"&gt;消す&lt;/span&gt;&lt;span class="err"&gt;）&lt;/span&gt;
+
+&lt;span class="nx"&gt;devserverの方は33行目&lt;/span&gt;&lt;span class="err"&gt;、&lt;/span&gt;&lt;span class="nx"&gt;pmakeの方は98行目にある&lt;/span&gt;
+
+&lt;span class="nx"&gt;cd&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;%&lt;/span&gt;&lt;span class="nx"&gt;_OUTPUTDIR&lt;/span&gt;&lt;span class="o"&gt;%&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;&amp;amp;&amp;amp;&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nx"&gt;python&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="nx"&gt;m&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nx"&gt;SimpleHTTPServer&lt;/span&gt;
+&lt;span class="err"&gt;↓&lt;/span&gt;
+&lt;span class="nx"&gt;cd&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;%&lt;/span&gt;&lt;span class="nx"&gt;_OUTPUTDIR&lt;/span&gt;&lt;span class="o"&gt;%&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;&amp;amp;&amp;amp;&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nx"&gt;python&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="nx"&gt;m&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nx"&gt;http&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;server&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;これでmakeコマンドの代わりにpmakeを使うことで同じことができるようになります。&lt;/p&gt;
+&lt;p&gt;projectディレクトリでコマンドプロンプトから以下を実行しましょう。（仮想環境にも入ってください。）&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;pmake html
+（これでoutputにサイトファイル群ができます）
+
+pmake publish
+（厳密には今の段階ではこれやらなくてもいいのですが、次回以降毎回やることになるので癖をつけておきましょう。）
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;これでmarkdownからサイトができました。&lt;/p&gt;
 &lt;h2&gt;見出し３&lt;/h2&gt;
 &lt;h3&gt;見出し３の１&lt;/h3&gt;
-&lt;h3&gt;見出し３の２&lt;/h3&gt;</content><category term="Front-end"></category><category term="Front-end"></category><category term="Python"></category><category term="pelican"></category><category term="pelican道場"></category></entry></feed>
+&lt;h3&gt;見出し３の２&lt;/h3&gt;</content><category term="Front-end"></category><category term="Front-end"></category><category term="Python"></category><category term="pelican"></category><category term="git"></category><category term="pelican道場"></category></entry></feed>

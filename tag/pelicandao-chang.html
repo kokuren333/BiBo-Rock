@@ -29,54 +29,59 @@
                 By                         <a class="url fn" href="https://kokuren333.github.io/BiBo-Rock/author/kokuren.html">kokuren</a>
         </address>
 <p>In <a href="https://kokuren333.github.io/BiBo-Rock/category/front-end.html">Front-end</a>.</p>
-<p>tags: <a href="https://kokuren333.github.io/BiBo-Rock/tag/front-end.html">Front-end</a> <a href="https://kokuren333.github.io/BiBo-Rock/tag/python.html">Python</a> <a href="https://kokuren333.github.io/BiBo-Rock/tag/pelican.html">pelican</a> <a href="https://kokuren333.github.io/BiBo-Rock/tag/pelicandao-chang.html">pelican道場</a> </p>
+<p>tags: <a href="https://kokuren333.github.io/BiBo-Rock/tag/front-end.html">Front-end</a> <a href="https://kokuren333.github.io/BiBo-Rock/tag/python.html">Python</a> <a href="https://kokuren333.github.io/BiBo-Rock/tag/pelican.html">pelican</a> <a href="https://kokuren333.github.io/BiBo-Rock/tag/git.html">git</a> <a href="https://kokuren333.github.io/BiBo-Rock/tag/pelicandao-chang.html">pelican道場</a> </p>
 </footer><!-- /.post-info --><p><strong>menu</strong>
 - <a href="#pythonで動く静的サイトジェネレータ-pelican">pythonで動く静的サイトジェネレータ "pelican"</a>
   - <a href="#静的サイトと動的サイト">静的サイトと動的サイト</a>
   - <a href="#静的サイトジェネレーターそれは魔法のアイテム">静的サイトジェネレーター、それは魔法のアイテム</a>
 - <a href="#サイトを公開するまでの簡易手順-pelican編">サイトを公開するまでの簡易手順 【pelican編】</a>
-  - <a href="#必要なライブラリをインストール">必要なライブラリをインストール</a>
+  - <a href="#仮想環境に必要なライブラリをインストール">仮想環境に必要なライブラリをインストール</a>
   - <a href="#markdownで記事を書いてpelicanでサイト化">markdownで記事を書いてpelicanでサイト化</a>
+  - <a href="#バッチファイルを用意windows">バッチファイルを用意（windows）</a>
 - <a href="#見出し３">見出し３</a>
   - <a href="#見出し３の１">見出し３の１</a>
   - <a href="#見出し３の２">見出し３の２</a></p>
 <h2>pythonで動く静的サイトジェネレータ "pelican"</h2>
 <p>自分で1からサイト作れるようになりたいなあとずっと思っていたのでついにサイト制作に手を出しちゃいました。サイト制作にあたって、pythonが好き（というかpythonしか環境構築してないから選択肢がない）なのでpelicanというpythonで動く静的サイトジェネレータを使ってみることにしました。</p>
 <p>ところがこのpelicanというライブラリ、なかなかまとまった日本語の情報が落ちていません。</p>
-<p>じゃあもう自分の備忘録用のブログを作るついでに、まとまったpelicanの解説記事群を作ってしまおうと思い立ちました。</p>
-<p>そこで、今回はpelicanでサイトを作成し、github pagesを使って実際に公開するまでの実際の手順をご紹介します。というよりは、自分でやってみたことの記録です。</p>
-<p>github pagesを使う理由はgitをちゃんと触ってみたかったのと、サーバー代もドメイン代もかからないのがアドすぎるからです。</p>
-<p>githubのリポジトリはpublicならいくらでも作れる（はず）ので、ソースコードを公開すればサイト自体は規約の範囲内で無料で作り放題（な気がする）！</p>
+<p>じゃあもう自分の備忘録用のブログを作るついでに、まとまったpelicanサイト制作の紹介記事群を作ってしまおうと思い立ちました。解説記事というよりは、自分がやったことほぼ全ての詳細な記録集にしようと思っています。後述しますが、筆者がプログラミング初心者であるため、理解していないけどとりあえずやっていることとかもあるからです。あくまでも備忘録です。</p>
+<p>今回はpelicanでサイトを生成し、github pagesを使って実際に公開するまでのおおまかな手順をご紹介します。</p>
+<p>正直この部分（サイト生成とgithubへのpush）については日本語でも解説記事が結構あり、CUIやらgitやらを使う場面が出てくるために若干環境によってやり方が異なる可能性があるので、各自調べながら頑張ってもらいたいのですが、一応やったことを記録しておきます。</p>
+<p>ちなみに筆者がgithub pagesを使う理由はgitをちょっと触ってみたかったのと、サーバー代もドメイン代もかからないのがアドすぎるからです。</p>
+<p>githubのリポジトリはpublicならいくらでも作れる（はず）ので、ソースコードを公開さえすればサイト自体は規約の範囲内で無料で作り放題（な気がする）！</p>
+<p>なお、多分アフィカスはできないので注意です。<br>
+WordPressとかいう過去の遺物でがんばってください。<br>
+(アドセンスぐらいならできた気もするけど)</p>
 <p><a href="https://docs.github.com/ja/pages/getting-started-with-github-pages/about-github-pages" title="GitHub Pagesについて">GitHub Pagesについて</a></p>
-<p>一応pelicanを触り始めた時の筆者のプログラミングスペックも記載しておきます。</p>
+<p>一応筆者のプログラミングスペックは以下になります。</p>
 <p>Python: github copilot（AIアシスタント）を使ってかろうじて書ける<br>
 html: 読めばだいたい何言ってるかはわかるが自分で書くのはしんどい<br>
-css: 全く知らないし、完全に理解していない<br>
-javascript: 本当に何も知らないし、型付けがめんどそう（Pythoner並感）</p>
-<p>あ、あと環境としてはwindowsでの話になります。<br>
-MACだとコマンドとかの部分がちょっと変わるのかも。</p>
+css: ほぼ知らないし、完全に理解していない<br>
+javascript: 本当に何も知らないし、型付けがめんどそう</p>
+<p>ちなみに、サイト制作の上でPythonをゴリゴリ書いたり読んだりしなきゃいけない場面はほぼ出てこないと思われます。ちょっと設定用の.pyファイルを弄るぐらいで済むはずです。</p>
 <h3>静的サイトと動的サイト</h3>
 <blockquote>
 <p>この世のサイトは2つしかない。静的サイトかそれ以外かだ。</p>
 </blockquote>
 <p>このインターネット上のウェブサイトは大きく「静的サイト」と「動的サイト」に分けられます。</p>
 <p>あんまりちゃんと理解はしていませんが、静的サイトはウェブサイトの基本セット（html + css + javascript）で構成されている、シンプルで誰がいつ見ても変わらないやつのことで、動的サイトはPHPとかを使ってサーバーといっぱいデータ通信をするやつって捉えています。</p>
-<p>速い遅いとかまだそんなに分かっていないのですが、まあ原理的に静的サイトの方が軽くて当然ですよね。有名なものとして<a href="http://abehiroshi.la.coocan.jp/" title="阿部寛のホームページ">阿部寛のホームページ</a>がよくネタとして擦られています。</p>
-<p>個人ブログの選択肢としてよくWordPressが挙げられますが、あれはPHPで動いてるみたいです。無料テーマはちょっとダサい感じするし、カスタマイズ性もしんどいです。そもそも個人ブログでサーバーサイドとデータのやり取りを沢山するケースがよくわからないので、静的サイトで作れるならそっちの方がよいと思っています。</p>
-<p>問題は、静的サイトの基本セット（html + css + javascript）を何もないところから自分で組み立てたり、ブログとして新しい記事を安定して投稿できるようにするのはちょっとガチでしんどいということです。copilotとかChatGPT使っても流石に限界がある。</p>
+<p>プログラムの速い遅いだとかは筆者はまだ分かっていないのですが、まあ原理的に静的サイトの方が軽くて当然ですよね。有名なものとして<a href="http://abehiroshi.la.coocan.jp/" title="阿部寛のホームページ">阿部寛のホームページ</a>がよくネタとして擦られています。</p>
+<p>個人ブログの選択肢としてよくWordPressが挙げられますが、あれはPHPで動いてるみたいです。無料テーマはちょっとダサい感じがするし、カスタマイズ性もしんどいです。そもそも個人ブログでサーバーサイドとデータのやり取りを沢山するケースがよくわからないので、静的サイトで作れるならそっちの方がよいと思っています。</p>
+<p>古き良きテキストサイトの趣もあるしね。</p>
+<p>問題は、静的サイトの基本セット（html + css + javascript）を何もないところから自分で組み立てたり、ブログとして新しい記事を安定して投稿できるようにシステム化するのはちょっとガチでしんどいということです。copilotとかChatGPTを使っても流石に限界がある。実際やったことあるっちゃあるんですがつらかった。</p>
+<p>昔のテキストサイト管理人たちの情熱はすごかったと感じています。</p>
 <h3>静的サイトジェネレーター、それは魔法のアイテム</h3>
-<p>ウェブサイト作りたいなーと思って色々調べている内に、markdown記法で書いたものをhtmlに変換する技術や、予め用意したcssのテンプレートなどを使ってサイトを制作できるプログラムがあることを知りました。</p>
-<p>やってることは原理的にはnoteとかqiitaみたいな文章コンテンツ投稿サイトのフロントエンドと同じなのかなと思ってます。（間違ってたらごめん。でもqiitaなんてそもそも記事をmarkdownで書くんだし。）</p>
+<p>ウェブサイトを作りたい（かつ維持したい）なーと思って色々調べている内に、markdown記法で書いたものをhtmlに変換する技術や、予め用意したcssのテンプレートなどを使ってサイトを制作できるプログラムがあることを知りました。</p>
+<p>やってることは原理的にはnoteとかqiitaみたいな文章コンテンツ投稿サイトと同じなのかなと思ってます。間違ってたらごめんなさい。でもqiitaなんてそもそも記事をmarkdownで書くわけで、多分やってること同じだと思うんですよね。</p>
 <p>ちまちまhtmlタグを一行一行打ち込むのはブログとして現実的に不可能ですし、markdown記法で書いたものを自分でも簡単に変換できるのは革命だと思いました。</p>
-<p>なんなら一度サイトの基本形を作ってしまえばあとはmarkdownで書いた記事を更新するだけなので、やることが単純明快でいいなと感じました。WordPressはごちゃごちゃしたUIにPHPとかいう謎言語の時点でもうやる気がなくなりますよね。</p>
-<p>有名な静的サイトジェネレータとしてはHugoやJekyllといったものがあるらしいのですが、Pythonで動くということと、pelicanという間抜けな名前に引かれて（そして日本語の情報があまりないマイナーな感じが面白くて）こいつを選びました。</p>
+<p>なんなら一度サイトの基本形を作ってしまえばあとはmarkdownで書いた記事を更新するだけなので、やることが単純明快でいいなと感じました。WordPressはごちゃごちゃしたUIにPHPとかいう謎言語の時点でもうやる気がなくなります。</p>
+<p>有名な静的サイトジェネレータとしてはHugoやJekyllといったものがあるらしいのですが、Pythonで動くということと、pelicanという間抜けな名前に惹かれて（そして日本語の情報があまりないマイナーな感じが面白くて）こいつを選びました。</p>
 <h2>サイトを公開するまでの簡易手順 【pelican編】</h2>
-<p>サイトを作って公開するための手順についてなのですが、実際はコンテンツやデザインを作り込む作業があるのを省略して、単純にpelicanでmarkdownからサイトを生成してgithubにぶち込む手順の紹介になります。</p>
-<p>まずはpelicanがどういうものなのか、github pagesってどう使うのかといったことの確認です。ぶっちゃけこれぐらいの内容はqiitaとかにもあるのですが、一応最初から丁寧に記録していきます。</p>
-<h3>必要なライブラリをインストール</h3>
-<p>まずは仮想環境をvenvで作成しましょう。<br>
-この程度の処理に仮想環境が必要なのかはわかりませんが、万が一のため。<br>
-適当なフォルダを用意し、そこでコマンドプロンプトから以下を実行。</p>
+<p>サイトを作って公開するための手順についてなのですが、本来はコンテンツやデザインを作り込む作業があるのを省略して、単純にpelicanでmarkdownからサイトを生成してgithubにぶち込む手順の紹介になります。正直ここまでは先駆者のn番煎じなので各自好きな記事で学習していただければと思います。</p>
+<p>pelicanがどういうものなのか、github pagesってどう使うのかといったことの確認みたいなものです。前述の通り、これぐらいの内容はqiitaとかにもあるのですが、一応詳細に記録しておきます。</p>
+<h3>仮想環境に必要なライブラリをインストール</h3>
+<p>まずは仮想環境をvenvで作成しましょう。  この程度のことに仮想環境が必要なのかはわかりませんが、万が一の環境汚染や動作不良防止のため。<br>
+適当なフォルダ（今回はBiBo-Rockとしました。サイト名にすると良いでしょう。）を用意し、そこでコマンドプロンプトから以下を実行。</p>
 <div class="highlight"><pre><span></span><code>python -m venv venv
 </code></pre></div>
 
@@ -84,43 +89,91 @@ MACだとコマンドとかの部分がちょっと変わるのかも。</p>
 <div class="highlight"><pre><span></span><code>md project
 </code></pre></div>
 
-<p>以下からの手順は全て、projectフォルダをカレントディレクトリとして話を進めます。</p>
-<p>仮想環境をアクティベートします。<br>
-パスを指定してactivate.batを実行。</p>
-<div class="highlight"><pre><span></span><code><span class="cp">..\venv\Scripts\activate.bat</span>
-</code></pre></div>
-
-<p>(venv)と表示されて入れば仮想環境のアクティベートに成功です。</p>
+<p>まず仮想環境をアクティベートします。<br>
+流石にPythonは入ってること前提です。<br>
+パスを指定してactivate.batを実行。
+(venv)と表示されていれば仮想環境のアクティベートに成功です。できなければ「venv 仮想環境 使い方」で検索しましょう。</p>
 <p>ここに必要なライブラリをpipコマンドでインストールします。</p>
 <div class="highlight"><pre><span></span><code>pip install pelican markdown ghp-import
 </code></pre></div>
 
 <p>これで仮想環境への必要なライブラリのインストールが完了しました。<br>
-前の2つはpelicanでmarkdownkからサイト自体を作るためのもの、ghp-importはgit関係のものです。</p>
+前の2つはpelicanでmarkdownkからサイト自体を作るためのもの、ghp-importはgit関係のものでしょう。</p>
 <h3>markdownで記事を書いてpelicanでサイト化</h3>
 <p>次に、以下のコマンドを実行します。</p>
 <div class="highlight"><pre><span></span><code>pelican-quickstart
 </code></pre></div>
 
-<p>これをやるとなんか設定用にめっちゃ質問が飛んでくるので以下のように答えていきます。（github pagesで公開するための設定例です。）</p>
-<div class="highlight"><pre><span></span><code><span class="k">Where</span><span class="w"> </span><span class="n">do</span><span class="w"> </span><span class="n">you</span><span class="w"> </span><span class="n">want</span><span class="w"> </span><span class="k">to</span><span class="w"> </span><span class="k">create</span><span class="w"> </span><span class="n">your</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">web</span><span class="w"> </span><span class="n">site</span><span class="vm">?</span><span class="w"> </span><span class="o">[</span><span class="n">.</span><span class="o">]</span><span class="w"> </span><span class="p">.</span>
-<span class="n">What</span><span class="w"> </span><span class="n">will</span><span class="w"> </span><span class="n">be</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">title</span><span class="w"> </span><span class="k">of</span><span class="w"> </span><span class="n">this</span><span class="w"> </span><span class="n">web</span><span class="w"> </span><span class="n">site</span><span class="vm">?</span><span class="w"> </span>
-<span class="n">Who</span><span class="w"> </span><span class="n">will</span><span class="w"> </span><span class="n">be</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">author</span><span class="w"> </span><span class="k">of</span><span class="w"> </span><span class="n">this</span><span class="w"> </span><span class="n">web</span><span class="w"> </span><span class="n">site</span><span class="vm">?</span><span class="w"> </span><span class="n">TestUser</span>
-<span class="n">What</span><span class="w"> </span><span class="n">will</span><span class="w"> </span><span class="n">be</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="k">default</span><span class="w"> </span><span class="k">language</span><span class="w"> </span><span class="k">of</span><span class="w"> </span><span class="n">this</span><span class="w"> </span><span class="n">web</span><span class="w"> </span><span class="n">site</span><span class="vm">?</span><span class="w"> </span><span class="o">[</span><span class="n">English</span><span class="o">]</span><span class="w"> </span><span class="n">ja</span>
-<span class="n">Do</span><span class="w"> </span><span class="n">you</span><span class="w"> </span><span class="n">want</span><span class="w"> </span><span class="k">to</span><span class="w"> </span><span class="n">specify</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="n">URL</span><span class="w"> </span><span class="k">prefix</span><span class="vm">?</span><span class="w"> </span><span class="n">e</span><span class="p">.</span><span class="n">g</span><span class="p">.,</span><span class="w"> </span><span class="nl">https</span><span class="p">:</span><span class="o">//</span><span class="n">example</span><span class="p">.</span><span class="n">com</span><span class="w">   </span><span class="p">(</span><span class="n">Y</span><span class="o">/</span><span class="n">n</span><span class="p">)</span><span class="w"> </span><span class="n">n</span>
-<span class="n">Do</span><span class="w"> </span><span class="n">you</span><span class="w"> </span><span class="n">want</span><span class="w"> </span><span class="k">to</span><span class="w"> </span><span class="n">enable</span><span class="w"> </span><span class="n">article</span><span class="w"> </span><span class="n">pagination</span><span class="vm">?</span><span class="w"> </span><span class="p">(</span><span class="n">Y</span><span class="o">/</span><span class="n">n</span><span class="p">)</span><span class="w"> </span><span class="n">Y</span>
-<span class="n">How</span><span class="w"> </span><span class="n">many</span><span class="w"> </span><span class="n">articles</span><span class="w"> </span><span class="n">per</span><span class="w"> </span><span class="n">page</span><span class="w"> </span><span class="n">do</span><span class="w"> </span><span class="n">you</span><span class="w"> </span><span class="n">want</span><span class="vm">?</span><span class="w"> </span><span class="o">[</span><span class="n">10</span><span class="o">]</span><span class="w"> </span><span class="mi">10</span>
-<span class="n">What</span><span class="w"> </span><span class="k">is</span><span class="w"> </span><span class="n">your</span><span class="w"> </span><span class="nc">time</span><span class="w"> </span><span class="k">zone</span><span class="vm">?</span><span class="w"> </span><span class="o">[</span><span class="n">Europe/Paris</span><span class="o">]</span><span class="w"> </span><span class="n">Asia</span><span class="o">/</span><span class="n">Tokyo</span>
-<span class="n">Do</span><span class="w"> </span><span class="n">you</span><span class="w"> </span><span class="n">want</span><span class="w"> </span><span class="k">to</span><span class="w"> </span><span class="n">generate</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="n">tasks</span><span class="p">.</span><span class="n">py</span><span class="o">/</span><span class="n">Makefile</span><span class="w"> </span><span class="k">to</span><span class="w"> </span><span class="n">automate</span><span class="w"> </span><span class="n">generation</span><span class="w"> </span><span class="ow">and</span><span class="w"> </span><span class="n">publishing</span><span class="vm">?</span><span class="w"> </span><span class="p">(</span><span class="n">Y</span><span class="o">/</span><span class="n">n</span><span class="p">)</span><span class="w"> </span><span class="n">Y</span>
-<span class="n">Do</span><span class="w"> </span><span class="n">you</span><span class="w"> </span><span class="n">want</span><span class="w"> </span><span class="k">to</span><span class="w"> </span><span class="n">upload</span><span class="w"> </span><span class="n">your</span><span class="w"> </span><span class="n">website</span><span class="w"> </span><span class="k">using</span><span class="w"> </span><span class="n">FTP</span><span class="vm">?</span><span class="w"> </span><span class="p">(</span><span class="n">y</span><span class="o">/</span><span class="n">N</span><span class="p">)</span><span class="w"> </span><span class="n">N</span>
-<span class="n">Do</span><span class="w"> </span><span class="n">you</span><span class="w"> </span><span class="n">want</span><span class="w"> </span><span class="k">to</span><span class="w"> </span><span class="n">upload</span><span class="w"> </span><span class="n">your</span><span class="w"> </span><span class="n">website</span><span class="w"> </span><span class="k">using</span><span class="w"> </span><span class="n">SSH</span><span class="vm">?</span><span class="w"> </span><span class="p">(</span><span class="n">y</span><span class="o">/</span><span class="n">N</span><span class="p">)</span><span class="w"> </span><span class="n">N</span>
-<span class="n">Do</span><span class="w"> </span><span class="n">you</span><span class="w"> </span><span class="n">want</span><span class="w"> </span><span class="k">to</span><span class="w"> </span><span class="n">upload</span><span class="w"> </span><span class="n">your</span><span class="w"> </span><span class="n">website</span><span class="w"> </span><span class="k">using</span><span class="w"> </span><span class="n">Dropbox</span><span class="vm">?</span><span class="w"> </span><span class="p">(</span><span class="n">y</span><span class="o">/</span><span class="n">N</span><span class="p">)</span><span class="w"> </span><span class="n">N</span>
-<span class="n">Do</span><span class="w"> </span><span class="n">you</span><span class="w"> </span><span class="n">want</span><span class="w"> </span><span class="k">to</span><span class="w"> </span><span class="n">upload</span><span class="w"> </span><span class="n">your</span><span class="w"> </span><span class="n">website</span><span class="w"> </span><span class="k">using</span><span class="w"> </span><span class="n">S3</span><span class="vm">?</span><span class="w"> </span><span class="p">(</span><span class="n">y</span><span class="o">/</span><span class="n">N</span><span class="p">)</span><span class="w"> </span><span class="n">N</span>
-<span class="n">Do</span><span class="w"> </span><span class="n">you</span><span class="w"> </span><span class="n">want</span><span class="w"> </span><span class="k">to</span><span class="w"> </span><span class="n">upload</span><span class="w"> </span><span class="n">your</span><span class="w"> </span><span class="n">website</span><span class="w"> </span><span class="k">using</span><span class="w"> </span><span class="n">Rackspace</span><span class="w"> </span><span class="n">Cloud</span><span class="w"> </span><span class="n">Files</span><span class="vm">?</span><span class="w"> </span><span class="p">(</span><span class="n">y</span><span class="o">/</span><span class="n">N</span><span class="p">)</span><span class="w"> </span><span class="n">N</span>
-<span class="n">Do</span><span class="w"> </span><span class="n">you</span><span class="w"> </span><span class="n">want</span><span class="w"> </span><span class="k">to</span><span class="w"> </span><span class="n">upload</span><span class="w"> </span><span class="n">your</span><span class="w"> </span><span class="n">website</span><span class="w"> </span><span class="k">using</span><span class="w"> </span><span class="n">GitHub</span><span class="w"> </span><span class="n">Pages</span><span class="vm">?</span><span class="w"> </span><span class="p">(</span><span class="n">y</span><span class="o">/</span><span class="n">N</span><span class="p">)</span><span class="w"> </span><span class="n">y</span>
-<span class="k">Is</span><span class="w"> </span><span class="n">this</span><span class="w"> </span><span class="n">your</span><span class="w"> </span><span class="n">personal</span><span class="w"> </span><span class="n">page</span><span class="w"> </span><span class="p">(</span><span class="n">username</span><span class="p">.</span><span class="n">github</span><span class="p">.</span><span class="n">io</span><span class="p">)</span><span class="vm">?</span><span class="w"> </span><span class="p">(</span><span class="n">y</span><span class="o">/</span><span class="n">N</span><span class="p">)</span><span class="w"> </span><span class="n">N</span>
+<p>これをやるとなんか設定用にめっちゃ質問が飛んでくるのでgithub pagesで公開することを前提に答えていきます。多分初期設定として重要なところなんですがどう答えたのか忘れました（アホ）。qiitaに答え方あげてくれてる人がいたので参考にしてください。というか英語読めれば困らなかったはずです。</p>
+<p>クイックスタートをしたら各フォルダを確認しましょう。project\contentに記事のmarkdown(拡張子.md)を置くことになります。project\outputにはmarkdownから生成されたhtmlやら、テンプレートから生成されたcssやらが入ることになり、このoutputフォルダの中身をそのままgithubに置くことになります。クイックスタート時点では多分まだ空のはずです。</p>
+<p>おそらくクイックスタート時点で記事のテンプレートmdファイルがcontentの中にあると思うので、そのままそのmarkdownからサイトを作ってgithub pagesにもうデプロイしちゃいましょう。markdownファイルがなければ.mdで新しく作りましょう。VScodeの標準機能でmarkdown拡張が入ってるみたいです。プレビューもできて便利。</p>
+<p>いきなりデプロイしちゃうのは、pelicanやgitの機能の理解をしてから詳細なサイト制作に入った方が、結果として作りこみやすいと思ったからです。</p>
+<p>そもそもgithub pagesをサイト制作に使う利点として、いつでもpushすることでオンライン上でプレビューできる、言い換えればサーバー関係の知識やノウハウなしに、gitのシステムを利用しながら本番環境で試しつつ制作できるところにあると思います。</p>
+<p>まあサーバー契約していちいちそのサーバーのページからアップロードしながら工程を進めるのとかとやってることは変わらないっちゃ変わらない気もするんですが、どっちもやったことある身としてはgit使った方が結果として楽だしより汎用的な技術だと感じました。最初操作感覚えるのしんどいけど。</p>
+<p>ともかく、markdownからhtmlやらを作っちゃいます。</p>
+<p>やり方は以下のコマンドを打つだけで簡単です。</p>
+<div class="highlight"><pre><span></span><code>make html
+→ htmlとかをまとめてoutputに生成するコマンド
+
+make publish
+→ output内を整理してくれる公開前に打つコマンド（例えばcontent内で消去したmarkdown記事の分のhtmlファイルを消去してくれたりする）
 </code></pre></div>
 
+<p>以下のコマンドでローカル環境で確認することもできます</p>
+<div class="highlight"><pre><span></span><code>make serve
+→ ローカル環境でサイトの確認ができる（http://localhost:8000を任意のブラウザで開くと見れるようになる）
+</code></pre></div>
+
+<p>ところがです。</p>
+<p>windowsだとなんか動作しないんですこれが。</p>
+<p>ともかくこのコマンドが動かないので以下の解決策を行いましょう。<br>
+（おそらくコマンドがwindows用にできていない）</p>
+<h3>バッチファイルを用意（windows）</h3>
+<p>以下からダウンロードしてね。</p>
+<p><a href="https://gist.github.com/traeblain/4252511" title="バッチファイルのリンク">devserver.cmdとpmake.cmdのgithubページ</a></p>
+<p>これをprojectフォルダ内に置きます。</p>
+<p>tree図としては以下のようになります。</p>
+<div class="highlight"><pre><span></span><code>│  devserver.cmd   ←これ
+│  Makefile
+│  pelicanconf.py
+│  pmake.cmd       ←これ
+│  publishconf.py
+│  tasks.py
+│
+├─content
+│      post_00001.md
+│     （ここが記事のmarkdownを置く場所）
+├─output
+│     （ここが実際にhtmlとかが生成される場所）
+│  
+</code></pre></div>
+
+<p>しかもそのままでも動かないので、バッチファイルの中身を書き換える必要があります。</p>
+<div class="highlight"><pre><span></span><code><span class="nx">両ファイルとも最初の方の行</span><span class="err">（</span><span class="mi">3</span><span class="err">～</span><span class="mi">5</span><span class="nx">行目</span><span class="err">）</span><span class="nx">にある</span>
+
+<span class="nx">set</span><span class="w"> </span><span class="nx">_PELICAN</span><span class="p">=</span><span class="err">$</span><span class="nx">pelican</span>
+<span class="nx">set</span><span class="w"> </span><span class="nx">_PELICANOPTS</span><span class="p">=</span><span class="err">$</span><span class="nx">pelicanopts</span>
+<span class="err">↓</span>
+<span class="nx">set</span><span class="w"> </span><span class="nx">_PELICAN</span><span class="p">=</span><span class="nx">pelican</span><span class="w"> </span><span class="err">（</span><span class="nx">頭の</span><span class="err">$</span><span class="nx">をとる</span><span class="err">）</span>
+<span class="nx">set</span><span class="w"> </span><span class="nx">_PELICANOPTS</span><span class="p">=</span><span class="w">    </span><span class="err">（</span><span class="nx">消す</span><span class="err">）</span>
+
+<span class="nx">devserverの方は33行目</span><span class="err">、</span><span class="nx">pmakeの方は98行目にある</span>
+
+<span class="nx">cd</span><span class="w"> </span><span class="o">%</span><span class="nx">_OUTPUTDIR</span><span class="o">%</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="nx">python</span><span class="w"> </span><span class="o">-</span><span class="nx">m</span><span class="w"> </span><span class="nx">SimpleHTTPServer</span>
+<span class="err">↓</span>
+<span class="nx">cd</span><span class="w"> </span><span class="o">%</span><span class="nx">_OUTPUTDIR</span><span class="o">%</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="nx">python</span><span class="w"> </span><span class="o">-</span><span class="nx">m</span><span class="w"> </span><span class="nx">http</span><span class="p">.</span><span class="nx">server</span>
+</code></pre></div>
+
+<p>これでmakeコマンドの代わりにpmakeを使うことで同じことができるようになります。</p>
+<p>projectディレクトリでコマンドプロンプトから以下を実行しましょう。（仮想環境にも入ってください。）</p>
+<div class="highlight"><pre><span></span><code>pmake html
+（これでoutputにサイトファイル群ができます）
+
+pmake publish
+（厳密には今の段階ではこれやらなくてもいいのですが、次回以降毎回やることになるので癖をつけておきましょう。）
+</code></pre></div>
+
+<p>これでmarkdownからサイトができました。</p>
 <h2>見出し３</h2>
 <h3>見出し３の１</h3>
 <h3>見出し３の２</h3>                </article>
