@@ -1,269 +1,42 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
+        <title>BiBo-Rock - Front-end tag</title>
         <meta charset="utf-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <meta name="generator" content="Pelican" />
-        <title>BiBo-Rock - Front-end</title>
-        <link rel="stylesheet" href="https://kokuren333.github.io/BiBo-Rock/theme/css/main.css" />
-        <link href="https://kokuren333.github.io/BiBo-Rock/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="BiBo-Rock Atom Feed" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link href="https://kokuren333.github.io/BiBo-Rock/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="BiBo-Rock Full Atom Feed" />
 </head>
 
-<body id="index" class="home">
-        <header id="banner" class="body">
-                <h1><a href="https://kokuren333.github.io/BiBo-Rock/">BiBo-Rock</a></h1>
-                <nav><ul>
-                    <li><a href="https://kokuren333.github.io/BiBo-Rock/category/front-end.html">Front-end</a></li>
-                </ul></nav>
-        </header><!-- /#banner -->
+<body>
+        <header>
+              <hgroup><h1><a href="https://kokuren333.github.io/BiBo-Rock/">BiBo-Rock</a></h1></hgroup>
+        <nav><ul>
+            <li><a href="https://kokuren333.github.io/BiBo-Rock/category/front-end.html" >Front-end</a></li>
+        </ul></nav>
+        </header>
+        <main>
+<h2>Articles tagged with Front-end</h2>
 
-            <aside id="featured" class="body">
-                <article>
-                    <h1 class="entry-title"><a href="https://kokuren333.github.io/BiBo-Rock/post_00001.html">pelicanでサイトを作ってGitHub Pagesで公開するための備忘録 【pelican道場01】</a></h1>
-<footer class="post-info">
-        <abbr class="published" title="2023-12-03T00:00:00+09:00">
-                Published: 日 03 12月 2023
-        </abbr>
 
-        <address class="vcard author">
-                By                         <a class="url fn" href="https://kokuren333.github.io/BiBo-Rock/author/kokuren.html">kokuren</a>
-        </address>
-<p>In <a href="https://kokuren333.github.io/BiBo-Rock/category/front-end.html">Front-end</a>.</p>
-<p>tags: <a href="https://kokuren333.github.io/BiBo-Rock/tag/front-end.html">Front-end</a> <a href="https://kokuren333.github.io/BiBo-Rock/tag/python.html">Python</a> <a href="https://kokuren333.github.io/BiBo-Rock/tag/pelican.html">pelican</a> <a href="https://kokuren333.github.io/BiBo-Rock/tag/git.html">git</a> <a href="https://kokuren333.github.io/BiBo-Rock/tag/pelicandao-chang.html">pelican道場</a> </p>
-</footer><!-- /.post-info --><p><strong>menu</strong>
-- <a href="#pythonで動く静的サイトジェネレータ-pelican">pythonで動く静的サイトジェネレータ "pelican"</a>
-  - <a href="#静的サイトと動的サイト">静的サイトと動的サイト</a>
-  - <a href="#静的サイトジェネレーターそれは魔法のアイテム">静的サイトジェネレーター、それは魔法のアイテム</a>
-- <a href="#サイトを公開するまでの簡易手順-pelican編">サイトを公開するまでの簡易手順 【pelican編】</a>
-  - <a href="#仮想環境に必要なライブラリをインストール">仮想環境に必要なライブラリをインストール</a>
-  - <a href="#markdownで記事を書いてpelicanでサイト化">markdownで記事を書いてpelicanでサイト化</a>
-  - <a href="#バッチファイルを用意windows">バッチファイルを用意（windows）</a>
-- <a href="#githubにoutputの中身をpushする">GitHubにoutputの中身をpushする</a>
-  - <a href="#githubにpushするためのコマンド初回">githubにpushするためのコマンド（初回）</a>
-  - <a href="#githubへのpushサイトの更新">githubへのpush（サイトの更新）</a>
-- <a href="#おわりに">おわりに</a></p>
-<h2>pythonで動く静的サイトジェネレータ "pelican"</h2>
-<p>自分で1からサイト作れるようになりたいなあとずっと思っていたのでついにサイト制作に手を出しちゃいました。サイト制作にあたって、pythonが好き（というかpythonしか環境構築してないから選択肢がない）なのでpelicanというpythonで動く静的サイトジェネレータを使ってみることにしました。</p>
-<p>ところがこのpelicanというライブラリ、なかなかまとまった日本語の情報が落ちていません。</p>
-<p>じゃあもう自分の備忘録用のブログを作るついでに、まとまったpelicanサイト制作の紹介記事群を作ってしまおうと思い立ちました。解説記事というよりは、自分がやったことほぼ全ての詳細な記録集にしようと思っています。後述しますが、筆者がプログラミング初心者であるため、理解していないけどとりあえずやっていることとかもあるからです。あくまでも備忘録です。</p>
-<p>今回はpelicanでサイトを生成し、github pagesを使って実際に公開するまでのおおまかな手順をご紹介します。</p>
-<p>正直この部分（サイト生成とgithubへのpush）については日本語でも解説記事が結構あり、CUIやらgitやらを使う場面が出てくるために若干環境によってやり方が異なる可能性があるので、各自調べながら頑張ってもらいたいのですが、一応やったことを記録しておきます。</p>
-<p>ちなみに筆者がgithub pagesを使う理由はgitをちょっと触ってみたかったのと、サーバー代もドメイン代もかからないのがアドすぎるからです。</p>
-<p>githubのリポジトリはpublicならいくらでも作れる（はず）ので、ソースコードを公開さえすればサイト自体は規約の範囲内で無料で作り放題（な気がする）！</p>
-<p>なお、多分アフィカスはできないので注意です。<br>
-WordPressとかいう過去の遺物でがんばってください。<br>
-(アドセンスぐらいならできた気もするけど)</p>
-<p><a href="https://docs.github.com/ja/pages/getting-started-with-github-pages/about-github-pages" title="GitHub Pagesについて">GitHub Pagesについて</a></p>
-<p>一応筆者のプログラミングスペックは以下になります。</p>
-<p>Python: github copilot（AIアシスタント）を使ってかろうじて書ける<br>
-html: 読めばだいたい何言ってるかはわかるが自分で書くのはしんどい<br>
-css: ほぼ知らないし、完全に理解していない<br>
-javascript: 本当に何も知らないし、型付けがめんどそう</p>
-<p>ちなみに、サイト制作の上でPythonをゴリゴリ書いたり読んだりしなきゃいけない場面はほぼ出てこないと思われます。ちょっと設定用の.pyファイルを弄るぐらいで済むはずです。</p>
-<h3>静的サイトと動的サイト</h3>
-<blockquote>
-<p>この世のサイトは2つしかない。静的サイトかそれ以外かだ。</p>
-</blockquote>
-<p>このインターネット上のウェブサイトは大きく「静的サイト」と「動的サイト」に分けられます。</p>
-<p>あんまりちゃんと理解はしていませんが、静的サイトはウェブサイトの基本セット（html + css + javascript）で構成されている、シンプルで誰がいつ見ても変わらないやつのことで、動的サイトはPHPとかを使ってサーバーといっぱいデータ通信をするやつって捉えています。</p>
-<p>プログラムの速い遅いだとかは筆者はまだ分かっていないのですが、まあ原理的に静的サイトの方が軽くて当然ですよね。有名なものとして<a href="http://abehiroshi.la.coocan.jp/" title="阿部寛のホームページ">阿部寛のホームページ</a>がよくネタとして擦られています。</p>
-<p>個人ブログの選択肢としてよくWordPressが挙げられますが、あれはPHPで動いてるみたいです。無料テーマはちょっとダサい感じがするし、カスタマイズ性もしんどいです。そもそも個人ブログでサーバーサイドとデータのやり取りを沢山するケースがよくわからないので、静的サイトで作れるならそっちの方がよいと思っています。</p>
-<p>古き良きテキストサイトの趣もあるしね。</p>
-<p>問題は、静的サイトの基本セット（html + css + javascript）を何もないところから自分で組み立てたり、ブログとして新しい記事を安定して投稿できるようにシステム化するのはちょっとガチでしんどいということです。copilotとかChatGPTを使っても流石に限界がある。実際やったことあるっちゃあるんですがつらかった。</p>
-<p>昔のテキストサイト管理人たちの情熱はすごかったと感じています。</p>
-<h3>静的サイトジェネレーター、それは魔法のアイテム</h3>
-<p>ウェブサイトを作りたい（かつ維持したい）なーと思って色々調べている内に、markdown記法で書いたものをhtmlに変換する技術や、予め用意したcssのテンプレートなどを使ってサイトを制作できるプログラムがあることを知りました。</p>
-<p>やってることは原理的にはnoteとかqiitaみたいな文章コンテンツ投稿サイトと同じなのかなと思ってます。間違ってたらごめんなさい。でもqiitaなんてそもそも記事をmarkdownで書くわけで、多分やってること同じだと思うんですよね。</p>
-<p>ちまちまhtmlタグを一行一行打ち込むのはブログとして現実的に不可能ですし、markdown記法で書いたものを自分でも簡単に変換できるのは革命だと思いました。</p>
-<p>なんなら一度サイトの基本形を作ってしまえばあとはmarkdownで書いた記事を更新するだけなので、やることが単純明快でいいなと感じました。WordPressはごちゃごちゃしたUIにPHPとかいう謎言語の時点でもうやる気がなくなります。</p>
-<p>有名な静的サイトジェネレータとしてはHugoやJekyllといったものがあるらしいのですが、Pythonで動くということと、pelicanという間抜けな名前に惹かれて（そして日本語の情報があまりないマイナーな感じが面白くて）こいつを選びました。</p>
-<h2>サイトを公開するまでの簡易手順 【pelican編】</h2>
-<p>サイトを作って公開するための手順についてなのですが、本来はコンテンツやデザインを作り込む作業があるのを省略して、単純にpelicanでmarkdownからサイトを生成してgithubにぶち込む手順の紹介になります。正直ここまでは先駆者のn番煎じなので各自好きな記事で学習していただければと思います。</p>
-<p>pelicanがどういうものなのか、github pagesってどう使うのかといったことの確認みたいなものです。前述の通り、これぐらいの内容はqiitaとかにもあるのですが、一応詳細に記録しておきます。</p>
-<h3>仮想環境に必要なライブラリをインストール</h3>
-<p>まずは仮想環境をvenvで作成しましょう。  この程度のことに仮想環境が必要なのかはわかりませんが、万が一の環境汚染や動作不良防止のため。<br>
-適当なフォルダ（今回はBiBo-Rockとしました。サイト名にすると良いでしょう。）を用意し、そこでコマンドプロンプトから以下を実行。</p>
-<div class="highlight"><pre><span></span><code>python -m venv venv
-</code></pre></div>
+        <article>
+                <header> <h2><a href="https://kokuren333.github.io/BiBo-Rock/post_00001.html" rel="bookmark" title="Permalink to pelicanでサイトを作ってGitHub Pagesで公開するための備忘録 【pelican道場01】">pelicanでサイトを作ってGitHub Pagesで公開するための備忘録 【pelican道場01】</a></h2> </header>
+                <section><p>pythonの静的サイトジェネレータライブラリであるpelicanを用いて</p></section>
+                <footer>
+                    <p>Published: <time datetime="2023-12-03T00:00:00+09:00"> 日 03 12月 2023 </time></p>
+                    <address>By
+                        <a href="https://kokuren333.github.io/BiBo-Rock/author/kokuren.html">kokuren</a>
+                    </address>
+                </footer>
+        </article>
 
-<p>これでvenvという仮想環境のフォルダが作成されるので、そのフォルダと同じディレクトリにprojectフォルダを作ってしまいましょう。手動で作ってもコマンドプロンプトから作っても構いません。</p>
-<div class="highlight"><pre><span></span><code>md project
-</code></pre></div>
 
-<p>まず仮想環境をアクティベートします。<br>
-流石にPythonは入ってること前提です。<br>
-パスを指定してactivate.batを実行。
-(venv)と表示されていれば仮想環境のアクティベートに成功です。できなければ「venv 仮想環境 使い方」で検索しましょう。</p>
-<p>ここに必要なライブラリをpipコマンドでインストールします。</p>
-<div class="highlight"><pre><span></span><code>pip install pelican markdown ghp-import
-</code></pre></div>
-
-<p>これで仮想環境への必要なライブラリのインストールが完了しました。<br>
-前の2つはpelicanでmarkdownkからサイト自体を作るためのもの、ghp-importはgit関係のものでしょう。</p>
-<h3>markdownで記事を書いてpelicanでサイト化</h3>
-<p>次に、以下のコマンドを実行します。</p>
-<div class="highlight"><pre><span></span><code>pelican-quickstart
-</code></pre></div>
-
-<p>これをやるとなんか設定用にめっちゃ質問が飛んでくるのでgithub pagesで公開することを前提に答えていきます。多分初期設定として重要なところなんですがどう答えたのか忘れました（アホ）。qiitaに答え方あげてくれてる人がいたので参考にしてください。というか英語読めれば困らなかったはずです。</p>
-<p>クイックスタートをしたら各フォルダを確認しましょう。project\contentに記事のmarkdown(拡張子.md)を置くことになります。project\outputにはmarkdownから生成されたhtmlやら、テンプレートから生成されたcssやらが入ることになり、このoutputフォルダの中身をそのままgithubに置くことになります。クイックスタート時点では多分まだ空のはずです。</p>
-<p>おそらくクイックスタート時点で記事のテンプレートmdファイルがcontentの中にあると思うので、そのままそのmarkdownからサイトを作ってgithub pagesにもうデプロイしちゃいましょう。markdownファイルがなければ.mdで新しく作りましょう。VScodeの標準機能でmarkdown拡張が入ってるみたいです。プレビューもできて便利。</p>
-<p>いきなりデプロイしちゃうのは、pelicanやgitの機能の理解をしてから詳細なサイト制作に入った方が、結果として作りこみやすいと思ったからです。</p>
-<p>そもそもgithub pagesをサイト制作に使う利点として、いつでもpushすることでオンライン上でプレビューできる、言い換えればサーバー関係の知識やノウハウなしに、gitのシステムを利用しながら本番環境で試しつつ制作できるところにあると思います。</p>
-<p>まあサーバー契約していちいちそのサーバーのページからアップロードしながら工程を進めるのとかとやってることは変わらないっちゃ変わらない気もするんですが、どっちもやったことある身としてはgit使った方が結果として楽だしより汎用的な技術だと感じました。最初操作感覚えるのしんどいけど。</p>
-<p>ともかく、markdownからhtmlやらを作っちゃいます。</p>
-<p>やり方は以下のコマンドを打つだけで簡単です。</p>
-<div class="highlight"><pre><span></span><code>make html
-→ htmlとかをまとめてoutputに生成するコマンド
-
-make publish
-→ output内を整理してくれる公開前に打つコマンド（例えばcontent内で消去したmarkdown記事の分のhtmlファイルを消去してくれたりする）
-</code></pre></div>
-
-<p>以下のコマンドでローカル環境で確認することもできます</p>
-<div class="highlight"><pre><span></span><code>make serve
-→ ローカル環境でサイトの確認ができる（http://localhost:8000を任意のブラウザで開くと見れるようになる）
-</code></pre></div>
-
-<p>ところがです。</p>
-<p>windowsだとなんか動作しないんですこれが。</p>
-<p>ともかくこのコマンドが動かないので以下の解決策を行いましょう。<br>
-（おそらくコマンドがwindows用にできていない）</p>
-<h3>バッチファイルを用意（windows）</h3>
-<p>以下からダウンロードしてね。</p>
-<p><a href="https://gist.github.com/traeblain/4252511" title="バッチファイルのリンク">devserver.cmdとpmake.cmdのgithubページ</a></p>
-<p>これをprojectフォルダ内に置きます。</p>
-<p>tree図としては以下のようになります。</p>
-<div class="highlight"><pre><span></span><code>│  devserver.cmd   ←これ
-│  Makefile
-│  pelicanconf.py
-│  pmake.cmd       ←これ
-│  publishconf.py
-│  tasks.py
-│
-├─content
-│      post_00001.md
-│     （ここが記事のmarkdownを置く場所）
-├─output
-│     （ここが実際にhtmlとかが生成される場所）
-│  
-</code></pre></div>
-
-<p>しかもそのままでも動かないので、バッチファイルの中身を書き換える必要があります。</p>
-<div class="highlight"><pre><span></span><code><span class="nx">両ファイルとも最初の方の行</span><span class="err">（</span><span class="mi">3</span><span class="err">～</span><span class="mi">5</span><span class="nx">行目</span><span class="err">）</span><span class="nx">にある</span>
-
-<span class="nx">set</span><span class="w"> </span><span class="nx">_PELICAN</span><span class="p">=</span><span class="err">$</span><span class="nx">pelican</span>
-<span class="nx">set</span><span class="w"> </span><span class="nx">_PELICANOPTS</span><span class="p">=</span><span class="err">$</span><span class="nx">pelicanopts</span>
-<span class="err">↓</span>
-<span class="nx">set</span><span class="w"> </span><span class="nx">_PELICAN</span><span class="p">=</span><span class="nx">pelican</span><span class="w"> </span><span class="err">（</span><span class="nx">頭の</span><span class="err">$</span><span class="nx">をとる</span><span class="err">）</span>
-<span class="nx">set</span><span class="w"> </span><span class="nx">_PELICANOPTS</span><span class="p">=</span><span class="w">    </span><span class="err">（</span><span class="nx">消す</span><span class="err">）</span>
-
-<span class="nx">devserverの方は33行目</span><span class="err">、</span><span class="nx">pmakeの方は98行目にある</span>
-
-<span class="nx">cd</span><span class="w"> </span><span class="o">%</span><span class="nx">_OUTPUTDIR</span><span class="o">%</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="nx">python</span><span class="w"> </span><span class="o">-</span><span class="nx">m</span><span class="w"> </span><span class="nx">SimpleHTTPServer</span>
-<span class="err">↓</span>
-<span class="nx">cd</span><span class="w"> </span><span class="o">%</span><span class="nx">_OUTPUTDIR</span><span class="o">%</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="nx">python</span><span class="w"> </span><span class="o">-</span><span class="nx">m</span><span class="w"> </span><span class="nx">http</span><span class="p">.</span><span class="nx">server</span>
-</code></pre></div>
-
-<p>これでmakeコマンドの代わりにpmakeを使うことで同じことができるようになります。</p>
-<p>projectディレクトリでコマンドプロンプトから以下を実行しましょう。（仮想環境にも入ってください。）</p>
-<div class="highlight"><pre><span></span><code>pmake html
-（これでoutputにサイトファイル群ができます）
-
-pmake publish
-（厳密には今の段階ではこれやらなくてもいいのですが、次回以降毎回やることになるので癖をつけておきましょう。）
-</code></pre></div>
-
-<p>これでmarkdownからサイトができました。</p>
-<h2>GitHubにoutputの中身をpushする</h2>
-<p>筆者がgitの仕様を完全に理解していないし、サイト制作の本質でもないのでここは省略します。</p>
-<p>そもそもgitの使い方については詳しくてわかりやすいものが世の中に大量に存在するはずなので。</p>
-<p>一応コマンドだけ自分用にメモを残しておきます。</p>
-<p>そもそもgitのインストールとgithubとの連携を忘れずにね！</p>
-<h3>githubにpushするためのコマンド（初回）</h3>
-<p>githubにリポジトリを新規作成しましょう。<br>
-筆者の場合はBiBo-Rockにしました。</p>
-<p>このとき、リポジトリ名をユーザーネームにしたときと、何等かのリポジトリ名を付けたときとで微妙にやることが変わってしまいます。正確にはやることは変わらないのですが、コピペではうまくいかなかったりするので気をつけてください。</p>
-<p>巷の解説記事はリポジトリ名をユーザーネームにした場合で書かれているものが多いです。<br>
-今回はリポジトリ名つけた場合を想定しています。</p>
-<p>まずproject内に.gitを召喚する。</p>
-<div class="highlight"><pre><span></span><code>git init
-</code></pre></div>
-
-<p>ghp-import outputのおかげでoutput内だけをpushできる？</p>
-<div class="highlight"><pre><span></span><code><span class="n">ghp</span><span class="o">-</span><span class="kn">import</span> <span class="nn">output</span>
-<span class="n">まずこれを実行</span>
-
-<span class="n">git</span> <span class="n">push</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">github</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="err">”</span><span class="n">ユーザーネーム</span><span class="s2">&quot;/&quot;</span><span class="n">リポジトリネーム</span><span class="s2">&quot;.git gh-pages:master</span>
-<span class="n">次にこれを実行</span><span class="err">、</span><span class="n">リポジトリネームに</span><span class="o">.</span><span class="n">git付けるのを忘れないように</span>
-<span class="n">筆者は何回もエラーを吐かせてやっとついてないことに気づいた</span>
-</code></pre></div>
-
-<p>これでgithubにoutput内のサイトデータがアップロードされます。</p>
-<p>次にgithubのsetting &gt; pages &gt; branchから、masterと/(root)を選択してsaveすることでサイトが構築されます。</p>
-<p>あとは「https://"ユーザーネーム".github.io/"リポジトリネーム"/」を開けば作ったサイトが見れるはずです。</p>
-<p>このサイトで言えば以下のリンクになります。</p>
-<p><a href="https://kokuren333.github.io/BiBo-Rock/" title="BiBo-Rock">https://kokuren333.github.io/BiBo-Rock/</a></p>
-<p>これでmarkdownからpythonで作ったサイトをデプロイできた！<br>
-なお、cssが反映されていない場合はcssが壊れているのではなく、パスがうまく設定されていないためです。</p>
-<p>project内のpelicanconf.pyとpublishconf.pyが設定ファイルなので、SITEURL="https://"ユーザーネーム".github.io/"リポジトリネーム""としてあげてからもう一回サイト生成とpushをやり直してみてください。</p>
-<p>なお、pelicanの公式ドキュメントを確認したところ、SITEURLは最後を" / "で終わらせてはいけないとのことだったので注意しましょう。（サイトのリンクから最後のスラッシュを消すだけです。）</p>
-<h3>githubへのpush（サイトの更新）</h3>
-<p>サイトを更新する際は、新しい記事のmarkdownを作成したり、あるいは消したい記事のmarkdownを削除してからpmake htmlとpmake publishを実行。これでgithubにpushする準備が整います。（output内のサイトのファイル群が更新される）</p>
-<p>ただここからはガチでよくわかっていません。<br>
-何回もエラーと格闘した末、次の手順でうまくいくことが判明。</p>
-<p>以下を順にprojectディレクトリで実行。</p>
-<div class="highlight"><pre><span></span><code><span class="n">ghp</span><span class="o">-</span><span class="kn">import</span> <span class="nn">output</span>
-<span class="n">魔法のおまじない</span>
-
-<span class="n">git</span> <span class="n">add</span> <span class="o">.</span>
-<span class="n">これはgit</span> <span class="n">add</span> <span class="n">output</span><span class="o">/</span><span class="n">の方が良い気がするがこれでも動く</span>
-
-<span class="n">git</span> <span class="n">commit</span> <span class="o">-</span><span class="n">m</span> <span class="s2">&quot;コメント&quot;</span>
-<span class="n">addの後にはcommitをしないといけない</span><span class="err">、</span><span class="o">-</span><span class="n">m</span> <span class="s2">&quot;コメント&quot;</span><span class="n">は別になくてもいい</span>
-
-<span class="n">git</span> <span class="n">push</span> <span class="o">-</span><span class="n">f</span> <span class="n">origin</span> <span class="n">gh</span><span class="o">-</span><span class="n">pages</span><span class="p">:</span><span class="n">master</span>
-<span class="o">-</span><span class="n">fはあまり使うべきじゃない気がするが</span><span class="err">、</span><span class="n">個人の静的サイトの更新だからOK</span><span class="err">？</span>
-</code></pre></div>
-
-<p>githubやgithub pagesを確認してみましょう。<br>
-リポジトリやサイトの内容が更新されているはずです。</p>
-<h2>おわりに</h2>
-<p>何度も言いますが、ここまでの内容はネットを漁れば日本語の情報も割とあるのでなんとかなるんです。既存のテーマやデフォルトのレイアウト、機能でサイトを作る分にはこれだけ押さえておけばOK。</p>
-<p>問題はサイトをカスタマイズしたい時です。</p>
-<p>自分好みにレイアウトを設計したり、プラグインを導入してよりブログらしい機能をつけたりできないと、なんか嫌じゃないですか？githubにある既存のテーマについても、そもそも日本語サイト向けではありません。このままではWordPressにも負けてしまいます。ポテンシャルはもっともっと高い気がするのに……。</p>
-<p>ということで、なんとかして自分で試行錯誤しながらそこら辺の日本語ドキュメントを作れたらと思います。</p>
-<p>対戦よろしくお願いします。</p>
-<p>おしまい。</p>                </article>
-            </aside><!-- /#featured -->
-        <section id="extras" class="body">
-                <div class="blogroll">
-                        <h2>links</h2>
-                        <ul>
-                            <li><a href="https://getpelican.com/">Pelican</a></li>
-                            <li><a href="https://www.python.org/">Python.org</a></li>
-                            <li><a href="https://palletsprojects.com/p/jinja/">Jinja2</a></li>
-                            <li><a href="#">You can modify those links in your config file</a></li>
-                        </ul>
-                </div><!-- /.blogroll -->
-                <div class="social">
-                        <h2>social</h2>
-                        <ul>
-                            <li><a href="https://kokuren333.github.io/BiBo-Rock/feeds/all.atom.xml" type="application/atom+xml" rel="alternate">atom feed</a></li>
-
-                            <li><a href="#">You can add links in your config file</a></li>
-                            <li><a href="#">Another social link</a></li>
-                        </ul>
-                </div><!-- /.social -->
-        </section><!-- /#extras -->
-
-        <footer id="contentinfo" class="body">
-                <address id="about" class="vcard body">
-                Proudly powered by <a rel="nofollow" href="https://getpelican.com/">Pelican</a>, which takes great advantage of <a rel="nofollow" href="https://www.python.org/">Python</a>.
-                </address><!-- /#about -->
-
-                <p>The theme is by <a rel="nofollow" href="https://www.smashingmagazine.com/2009/08/designing-a-html-5-layout-from-scratch/">Smashing Magazine</a>, thanks!</p>
-        </footer><!-- /#contentinfo -->
-
+        </main>
+        <footer>
+                <address>
+                Proudly powered by <a rel="nofollow" href="https://getpelican.com/">Pelican</a>,
+                which takes great advantage of <a rel="nofollow" href="https://www.python.org/">Python</a>.
+                </address>
+        </footer>
 </body>
 </html>
