@@ -4,7 +4,7 @@
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <meta name="generator" content="Pelican" />
-        <title>pelicanでサイトを作ってGitHub Pagesで公開する手順メモ【pelican道場01】</title>
+        <title>pelicanでサイトを作ってGitHub Pagesで公開するための備忘録 【pelican道場01】</title>
         <link rel="stylesheet" href="https://kokuren333.github.io/BiBo-Rock/theme/css/main.css" />
         <link href="https://kokuren333.github.io/BiBo-Rock/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="BiBo-Rock Atom Feed" />
 </head>
@@ -21,7 +21,7 @@
     <header>
       <h1 class="entry-title">
         <a href="https://kokuren333.github.io/BiBo-Rock/post_00001.html" rel="bookmark"
-           title="Permalink to pelicanでサイトを作ってGitHub Pagesで公開する手順メモ【pelican道場01】">pelicanでサイトを作ってGitHub Pagesで公開する手順メモ【pelican道場01】</a></h1>
+           title="Permalink to pelicanでサイトを作ってGitHub Pagesで公開するための備忘録 【pelican道場01】">pelicanでサイトを作ってGitHub Pagesで公開するための備忘録 【pelican道場01】</a></h1>
     </header>
 
     <div class="entry-content">
@@ -43,9 +43,10 @@
   - <a href="#仮想環境に必要なライブラリをインストール">仮想環境に必要なライブラリをインストール</a>
   - <a href="#markdownで記事を書いてpelicanでサイト化">markdownで記事を書いてpelicanでサイト化</a>
   - <a href="#バッチファイルを用意windows">バッチファイルを用意（windows）</a>
-- <a href="#見出し３">見出し３</a>
-  - <a href="#見出し３の１">見出し３の１</a>
-  - <a href="#見出し３の２">見出し３の２</a></p>
+- <a href="#githubにoutputの中身をpushする">GitHubにoutputの中身をpushする</a>
+  - <a href="#githubにpushするためのコマンド初回">githubにpushするためのコマンド（初回）</a>
+  - <a href="#githubへのpushサイトの更新">githubへのpush（サイトの更新）</a>
+- <a href="#おわりに">おわりに</a></p>
 <h2>pythonで動く静的サイトジェネレータ "pelican"</h2>
 <p>自分で1からサイト作れるようになりたいなあとずっと思っていたのでついにサイト制作に手を出しちゃいました。サイト制作にあたって、pythonが好き（というかpythonしか環境構築してないから選択肢がない）なのでpelicanというpythonで動く静的サイトジェネレータを使ってみることにしました。</p>
 <p>ところがこのpelicanというライブラリ、なかなかまとまった日本語の情報が落ちていません。</p>
@@ -179,9 +180,66 @@ pmake publish
 </code></pre></div>
 
 <p>これでmarkdownからサイトができました。</p>
-<h2>見出し３</h2>
-<h3>見出し３の１</h3>
-<h3>見出し３の２</h3>
+<h2>GitHubにoutputの中身をpushする</h2>
+<p>筆者がgitの仕様を完全に理解していないし、サイト制作の本質でもないのでここは省略します。</p>
+<p>そもそもgitの使い方については詳しくてわかりやすいものが世の中に大量に存在するはずなので。</p>
+<p>一応コマンドだけ自分用にメモを残しておきます。</p>
+<p>そもそもgitのインストールとgithubとの連携を忘れずにね！</p>
+<h3>githubにpushするためのコマンド（初回）</h3>
+<p>githubにリポジトリを新規作成しましょう。<br>
+筆者の場合はBiBo-Rockにしました。</p>
+<p>このとき、リポジトリ名をユーザーネームにしたときと、何等かのリポジトリ名を付けたときとで微妙にやることが変わってしまいます。正確にはやることは変わらないのですが、コピペではうまくいかなかったりするので気をつけてください。</p>
+<p>巷の解説記事はリポジトリ名をユーザーネームにした場合で書かれているものが多いです。<br>
+今回はリポジトリ名つけた場合を想定しています。</p>
+<p>まずproject内に.gitを召喚する。</p>
+<div class="highlight"><pre><span></span><code>git init
+</code></pre></div>
+
+<p>ghp-import outputのおかげでoutput内だけをpushできる？</p>
+<div class="highlight"><pre><span></span><code><span class="n">ghp</span><span class="o">-</span><span class="kn">import</span> <span class="nn">output</span>
+<span class="n">まずこれを実行</span>
+
+<span class="n">git</span> <span class="n">push</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">github</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="err">”</span><span class="n">ユーザーネーム</span><span class="s2">&quot;/&quot;</span><span class="n">リポジトリネーム</span><span class="s2">&quot;.git gh-pages:master</span>
+<span class="n">次にこれを実行</span><span class="err">、</span><span class="n">リポジトリネームに</span><span class="o">.</span><span class="n">git付けるのを忘れないように</span>
+<span class="n">筆者は何回もエラーを吐かせてやっとついてないことに気づいた</span>
+</code></pre></div>
+
+<p>これでgithubにoutput内のサイトデータがアップロードされます。</p>
+<p>次にgithubのsetting &gt; pages &gt; branchから、masterと/(root)を選択してsaveすることでサイトが構築されます。</p>
+<p>あとは「https://"ユーザーネーム".github.io/"リポジトリネーム"/」を開けば作ったサイトが見れるはずです。</p>
+<p>このサイトで言えば以下のリンクになります。</p>
+<p><a href="https://kokuren333.github.io/BiBo-Rock/" title="BiBo-Rock">https://kokuren333.github.io/BiBo-Rock/</a></p>
+<p>これでmarkdownからpythonで作ったサイトをデプロイできた！<br>
+なお、cssが反映されていない場合はcssが壊れているのではなく、パスがうまく設定されていないためです。</p>
+<p>project内のpelicanconf.pyとpublishconf.pyが設定ファイルなので、SITEURL="https://"ユーザーネーム".github.io/"リポジトリネーム""としてあげてからもう一回サイト生成とpushをやり直してみてください。</p>
+<p>なお、pelicanの公式ドキュメントを確認したところ、SITEURLは最後を" / "で終わらせてはいけないとのことだったので注意しましょう。（サイトのリンクから最後のスラッシュを消すだけです。）</p>
+<h3>githubへのpush（サイトの更新）</h3>
+<p>サイトを更新する際は、新しい記事のmarkdownを作成したり、あるいは消したい記事のmarkdownを削除してからpmake htmlとpmake publishを実行。これでgithubにpushする準備が整います。（output内のサイトのファイル群が更新される）</p>
+<p>ただここからはガチでよくわかっていません。<br>
+何回もエラーと格闘した末、次の手順でうまくいくことが判明。</p>
+<p>以下を順にprojectディレクトリで実行。</p>
+<div class="highlight"><pre><span></span><code><span class="n">ghp</span><span class="o">-</span><span class="kn">import</span> <span class="nn">output</span>
+<span class="n">魔法のおまじない</span>
+
+<span class="n">git</span> <span class="n">add</span> <span class="o">.</span>
+<span class="n">これはgit</span> <span class="n">add</span> <span class="n">output</span><span class="o">/</span><span class="n">の方が良い気がするがこれでも動く</span>
+
+<span class="n">git</span> <span class="n">commit</span> <span class="o">-</span><span class="n">m</span> <span class="s2">&quot;コメント&quot;</span>
+<span class="n">addの後にはcommitをしないといけない</span><span class="err">、</span><span class="o">-</span><span class="n">m</span> <span class="s2">&quot;コメント&quot;</span><span class="n">は別になくてもいい</span>
+
+<span class="n">git</span> <span class="n">push</span> <span class="o">-</span><span class="n">f</span> <span class="n">origin</span> <span class="n">gh</span><span class="o">-</span><span class="n">pages</span><span class="p">:</span><span class="n">master</span>
+<span class="o">-</span><span class="n">fはあまり使うべきじゃない気がするが</span><span class="err">、</span><span class="n">個人の静的サイトの更新だからOK</span><span class="err">？</span>
+</code></pre></div>
+
+<p>githubやgithub pagesを確認してみましょう。<br>
+リポジトリやサイトの内容が更新されているはずです。</p>
+<h2>おわりに</h2>
+<p>何度も言いますが、ここまでの内容はネットを漁れば日本語の情報も割とあるのでなんとかなるんです。既存のテーマやデフォルトのレイアウト、機能でサイトを作る分にはこれだけ押さえておけばOK。</p>
+<p>問題はサイトをカスタマイズしたい時です。</p>
+<p>自分好みにレイアウトを設計したり、プラグインを導入してよりブログらしい機能をつけたりできないと、なんか嫌じゃないですか？githubにある既存のテーマについても、そもそも日本語サイト向けではありません。このままではWordPressにも負けてしまいます。ポテンシャルはもっともっと高い気がするのに……。</p>
+<p>ということで、なんとかして自分で試行錯誤しながらそこら辺の日本語ドキュメントを作れたらと思います。</p>
+<p>対戦よろしくお願いします。</p>
+<p>おしまい。</p>
     </div><!-- /.entry-content -->
 
   </article>

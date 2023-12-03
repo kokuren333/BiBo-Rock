@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>BiBo-Rock - Front-end</title><link href="https://kokuren333.github.io/BiBo-Rock/" rel="alternate"></link><link href="https://kokuren333.github.io/BiBo-Rock/feeds/front-end.atom.xml" rel="self"></link><id>https://kokuren333.github.io/BiBo-Rock/</id><updated>2023-12-03T00:00:00+09:00</updated><entry><title>pelicanでサイトを作ってGitHub Pagesで公開する手順メモ【pelican道場01】</title><link href="https://kokuren333.github.io/BiBo-Rock/post_00001.html" rel="alternate"></link><published>2023-12-03T00:00:00+09:00</published><updated>2023-12-03T00:00:00+09:00</updated><author><name>kokuren</name></author><id>tag:kokuren333.github.io,2023-12-03:/BiBo-Rock/post_00001.html</id><summary type="html"></summary><content type="html">&lt;p&gt;&lt;strong&gt;menu&lt;/strong&gt;
+<feed xmlns="http://www.w3.org/2005/Atom"><title>BiBo-Rock - Front-end</title><link href="https://kokuren333.github.io/BiBo-Rock/" rel="alternate"></link><link href="https://kokuren333.github.io/BiBo-Rock/feeds/front-end.atom.xml" rel="self"></link><id>https://kokuren333.github.io/BiBo-Rock/</id><updated>2023-12-03T00:00:00+09:00</updated><entry><title>pelicanでサイトを作ってGitHub Pagesで公開するための備忘録 【pelican道場01】</title><link href="https://kokuren333.github.io/BiBo-Rock/post_00001.html" rel="alternate"></link><published>2023-12-03T00:00:00+09:00</published><updated>2023-12-03T00:00:00+09:00</updated><author><name>kokuren</name></author><id>tag:kokuren333.github.io,2023-12-03:/BiBo-Rock/post_00001.html</id><summary type="html"></summary><content type="html">&lt;p&gt;&lt;strong&gt;menu&lt;/strong&gt;
 - &lt;a href="#pythonで動く静的サイトジェネレータ-pelican"&gt;pythonで動く静的サイトジェネレータ "pelican"&lt;/a&gt;
   - &lt;a href="#静的サイトと動的サイト"&gt;静的サイトと動的サイト&lt;/a&gt;
   - &lt;a href="#静的サイトジェネレーターそれは魔法のアイテム"&gt;静的サイトジェネレーター、それは魔法のアイテム&lt;/a&gt;
@@ -7,9 +7,10 @@
   - &lt;a href="#仮想環境に必要なライブラリをインストール"&gt;仮想環境に必要なライブラリをインストール&lt;/a&gt;
   - &lt;a href="#markdownで記事を書いてpelicanでサイト化"&gt;markdownで記事を書いてpelicanでサイト化&lt;/a&gt;
   - &lt;a href="#バッチファイルを用意windows"&gt;バッチファイルを用意（windows）&lt;/a&gt;
-- &lt;a href="#見出し３"&gt;見出し３&lt;/a&gt;
-  - &lt;a href="#見出し３の１"&gt;見出し３の１&lt;/a&gt;
-  - &lt;a href="#見出し３の２"&gt;見出し３の２&lt;/a&gt;&lt;/p&gt;
+- &lt;a href="#githubにoutputの中身をpushする"&gt;GitHubにoutputの中身をpushする&lt;/a&gt;
+  - &lt;a href="#githubにpushするためのコマンド初回"&gt;githubにpushするためのコマンド（初回）&lt;/a&gt;
+  - &lt;a href="#githubへのpushサイトの更新"&gt;githubへのpush（サイトの更新）&lt;/a&gt;
+- &lt;a href="#おわりに"&gt;おわりに&lt;/a&gt;&lt;/p&gt;
 &lt;h2&gt;pythonで動く静的サイトジェネレータ "pelican"&lt;/h2&gt;
 &lt;p&gt;自分で1からサイト作れるようになりたいなあとずっと思っていたのでついにサイト制作に手を出しちゃいました。サイト制作にあたって、pythonが好き（というかpythonしか環境構築してないから選択肢がない）なのでpelicanというpythonで動く静的サイトジェネレータを使ってみることにしました。&lt;/p&gt;
 &lt;p&gt;ところがこのpelicanというライブラリ、なかなかまとまった日本語の情報が落ちていません。&lt;/p&gt;
@@ -143,6 +144,63 @@ pmake publish
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;p&gt;これでmarkdownからサイトができました。&lt;/p&gt;
-&lt;h2&gt;見出し３&lt;/h2&gt;
-&lt;h3&gt;見出し３の１&lt;/h3&gt;
-&lt;h3&gt;見出し３の２&lt;/h3&gt;</content><category term="Front-end"></category><category term="Front-end"></category><category term="Python"></category><category term="pelican"></category><category term="git"></category><category term="pelican道場"></category></entry></feed>
+&lt;h2&gt;GitHubにoutputの中身をpushする&lt;/h2&gt;
+&lt;p&gt;筆者がgitの仕様を完全に理解していないし、サイト制作の本質でもないのでここは省略します。&lt;/p&gt;
+&lt;p&gt;そもそもgitの使い方については詳しくてわかりやすいものが世の中に大量に存在するはずなので。&lt;/p&gt;
+&lt;p&gt;一応コマンドだけ自分用にメモを残しておきます。&lt;/p&gt;
+&lt;p&gt;そもそもgitのインストールとgithubとの連携を忘れずにね！&lt;/p&gt;
+&lt;h3&gt;githubにpushするためのコマンド（初回）&lt;/h3&gt;
+&lt;p&gt;githubにリポジトリを新規作成しましょう。&lt;br&gt;
+筆者の場合はBiBo-Rockにしました。&lt;/p&gt;
+&lt;p&gt;このとき、リポジトリ名をユーザーネームにしたときと、何等かのリポジトリ名を付けたときとで微妙にやることが変わってしまいます。正確にはやることは変わらないのですが、コピペではうまくいかなかったりするので気をつけてください。&lt;/p&gt;
+&lt;p&gt;巷の解説記事はリポジトリ名をユーザーネームにした場合で書かれているものが多いです。&lt;br&gt;
+今回はリポジトリ名つけた場合を想定しています。&lt;/p&gt;
+&lt;p&gt;まずproject内に.gitを召喚する。&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;git init
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;ghp-import outputのおかげでoutput内だけをpushできる？&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="n"&gt;ghp&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;output&lt;/span&gt;
+&lt;span class="n"&gt;まずこれを実行&lt;/span&gt;
+
+&lt;span class="n"&gt;git&lt;/span&gt; &lt;span class="n"&gt;push&lt;/span&gt; &lt;span class="n"&gt;https&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="o"&gt;//&lt;/span&gt;&lt;span class="n"&gt;github&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;com&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="err"&gt;”&lt;/span&gt;&lt;span class="n"&gt;ユーザーネーム&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;/&amp;quot;&lt;/span&gt;&lt;span class="n"&gt;リポジトリネーム&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;.git gh-pages:master&lt;/span&gt;
+&lt;span class="n"&gt;次にこれを実行&lt;/span&gt;&lt;span class="err"&gt;、&lt;/span&gt;&lt;span class="n"&gt;リポジトリネームに&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;git付けるのを忘れないように&lt;/span&gt;
+&lt;span class="n"&gt;筆者は何回もエラーを吐かせてやっとついてないことに気づいた&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;これでgithubにoutput内のサイトデータがアップロードされます。&lt;/p&gt;
+&lt;p&gt;次にgithubのsetting &amp;gt; pages &amp;gt; branchから、masterと/(root)を選択してsaveすることでサイトが構築されます。&lt;/p&gt;
+&lt;p&gt;あとは「https://"ユーザーネーム".github.io/"リポジトリネーム"/」を開けば作ったサイトが見れるはずです。&lt;/p&gt;
+&lt;p&gt;このサイトで言えば以下のリンクになります。&lt;/p&gt;
+&lt;p&gt;&lt;a href="https://kokuren333.github.io/BiBo-Rock/" title="BiBo-Rock"&gt;https://kokuren333.github.io/BiBo-Rock/&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;これでmarkdownからpythonで作ったサイトをデプロイできた！&lt;br&gt;
+なお、cssが反映されていない場合はcssが壊れているのではなく、パスがうまく設定されていないためです。&lt;/p&gt;
+&lt;p&gt;project内のpelicanconf.pyとpublishconf.pyが設定ファイルなので、SITEURL="https://"ユーザーネーム".github.io/"リポジトリネーム""としてあげてからもう一回サイト生成とpushをやり直してみてください。&lt;/p&gt;
+&lt;p&gt;なお、pelicanの公式ドキュメントを確認したところ、SITEURLは最後を" / "で終わらせてはいけないとのことだったので注意しましょう。（サイトのリンクから最後のスラッシュを消すだけです。）&lt;/p&gt;
+&lt;h3&gt;githubへのpush（サイトの更新）&lt;/h3&gt;
+&lt;p&gt;サイトを更新する際は、新しい記事のmarkdownを作成したり、あるいは消したい記事のmarkdownを削除してからpmake htmlとpmake publishを実行。これでgithubにpushする準備が整います。（output内のサイトのファイル群が更新される）&lt;/p&gt;
+&lt;p&gt;ただここからはガチでよくわかっていません。&lt;br&gt;
+何回もエラーと格闘した末、次の手順でうまくいくことが判明。&lt;/p&gt;
+&lt;p&gt;以下を順にprojectディレクトリで実行。&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="n"&gt;ghp&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;output&lt;/span&gt;
+&lt;span class="n"&gt;魔法のおまじない&lt;/span&gt;
+
+&lt;span class="n"&gt;git&lt;/span&gt; &lt;span class="n"&gt;add&lt;/span&gt; &lt;span class="o"&gt;.&lt;/span&gt;
+&lt;span class="n"&gt;これはgit&lt;/span&gt; &lt;span class="n"&gt;add&lt;/span&gt; &lt;span class="n"&gt;output&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;の方が良い気がするがこれでも動く&lt;/span&gt;
+
+&lt;span class="n"&gt;git&lt;/span&gt; &lt;span class="n"&gt;commit&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;m&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;コメント&amp;quot;&lt;/span&gt;
+&lt;span class="n"&gt;addの後にはcommitをしないといけない&lt;/span&gt;&lt;span class="err"&gt;、&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;m&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;コメント&amp;quot;&lt;/span&gt;&lt;span class="n"&gt;は別になくてもいい&lt;/span&gt;
+
+&lt;span class="n"&gt;git&lt;/span&gt; &lt;span class="n"&gt;push&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;f&lt;/span&gt; &lt;span class="n"&gt;origin&lt;/span&gt; &lt;span class="n"&gt;gh&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;pages&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="n"&gt;master&lt;/span&gt;
+&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;fはあまり使うべきじゃない気がするが&lt;/span&gt;&lt;span class="err"&gt;、&lt;/span&gt;&lt;span class="n"&gt;個人の静的サイトの更新だからOK&lt;/span&gt;&lt;span class="err"&gt;？&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;githubやgithub pagesを確認してみましょう。&lt;br&gt;
+リポジトリやサイトの内容が更新されているはずです。&lt;/p&gt;
+&lt;h2&gt;おわりに&lt;/h2&gt;
+&lt;p&gt;何度も言いますが、ここまでの内容はネットを漁れば日本語の情報も割とあるのでなんとかなるんです。既存のテーマやデフォルトのレイアウト、機能でサイトを作る分にはこれだけ押さえておけばOK。&lt;/p&gt;
+&lt;p&gt;問題はサイトをカスタマイズしたい時です。&lt;/p&gt;
+&lt;p&gt;自分好みにレイアウトを設計したり、プラグインを導入してよりブログらしい機能をつけたりできないと、なんか嫌じゃないですか？githubにある既存のテーマについても、そもそも日本語サイト向けではありません。このままではWordPressにも負けてしまいます。ポテンシャルはもっともっと高い気がするのに……。&lt;/p&gt;
+&lt;p&gt;ということで、なんとかして自分で試行錯誤しながらそこら辺の日本語ドキュメントを作れたらと思います。&lt;/p&gt;
+&lt;p&gt;対戦よろしくお願いします。&lt;/p&gt;
+&lt;p&gt;おしまい。&lt;/p&gt;</content><category term="Front-end"></category><category term="Front-end"></category><category term="Python"></category><category term="pelican"></category><category term="git"></category><category term="pelican道場"></category></entry></feed>
